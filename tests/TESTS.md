@@ -58,7 +58,7 @@ Notes:
 
 ## Tuning data (for Phase 4)
 
-Readings from the tester's phone, 2026-11-14, all with "Photo checks passed". Assumed to be 4 different photos of the same person (to confirm).
+Readings from the tester's phone, 2026-11-14, all with "Photo checks passed". 4 different photos of the same person (confirmed by the tester).
 
 | Photo | Length | Forehead | Jaw | Jaw angle | Head turn / up-down / lean |
 |---|---|---|---|---|---|
