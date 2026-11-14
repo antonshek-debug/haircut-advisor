@@ -18,7 +18,8 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | not run |
 | 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | not run |
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work | 8 | not run |
-| 13 | Open a result on the phone | Every suggested cut shows its drawing; a cut with a missing file shows without a picture and without an error | 4b | PC part pass; phone not run |
+| 13 | Open a result on the phone | Every suggested cut shows its drawing; a cut with a missing file shows without a picture and without an error | 4b | PC part pass (2026-11-14); phone part replaced by test 14 |
+| 14 | Open a result on the phone | Every suggested cut shows the user's photo with the cut drawn on it; the page sends no image to any server | 4c | PC part pass; phone not run |
 
 ## Run log
 
@@ -102,6 +103,24 @@ Run 2026-11-14 by Claude in the browser pane, local preview. The phone part of t
 Notes:
 - Drawings are made by `tools/make_cuts.py` (added to the plan's file list with the tester's approval): a face outline per shape plus hair parts.
 - Each cut is drawn once, in the first texture listed for it.
+
+### Phase 4c — Haircut on the user's own photo
+
+Run 2026-11-14 by Claude in the browser pane, local preview. The plan was changed first (the tester found the neutral drawings not personal enough). The tester approved the 46 neutral drawings for publishing; they stay as the fallback.
+
+Claude has no real face photo, so the PC checks use a synthetic face: a drawn oval tilted 8°, with landmarks placed on its outline.
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| Every cut in every texture draws | No errors | 44 cuts × 4 textures = 176 drawn, 0 errors, about 1 ms each | pass |
+| The picture is straightened and centred | Tilted face comes out upright, hair sits on the head | As expected for 11 cuts looked at | pass |
+| Hair colour | Taken from the photo above the forehead | Matched the synthetic hair colour | pass |
+| Page loads with the new script | No script errors, settings file loads | Status "Ready", `cut-specs.json` HTTP 200 | pass |
+| `tools/make_cuts.py` after moving the settings | Same 46 drawings | 0 files changed | pass |
+| Test 14, phone: cut drawn on the user's photo | Every suggested cut shows it | not run | open |
+| Test 14: no image sent to a server | No upload | The code draws on a canvas and has no upload call; not yet checked on a phone | open |
+
+Known limits (told to the tester before building): it looks like a drawn wig, the person's real hair stays visible, and the hair colour is a guess.
 
 ## Tuning data (for Phase 4)
 

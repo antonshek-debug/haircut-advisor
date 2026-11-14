@@ -6,6 +6,8 @@ on it. It shows the cut, not a real person.
 The cut names come from the live `haircuts` table, so the file names match
 what the page looks up: <face shape>-<cut name in lower case with hyphens>.svg
 
+Hair settings per cut: docs/cut-specs.json (shared with docs/cuts.js).
+
 Usage (needs SUPABASE_URL and SUPABASE_ANON_KEY in .env, no other packages):
     python tools/make_cuts.py
 
@@ -53,62 +55,9 @@ FACES = {
 #   ends    blunt | layered
 #   frame   how much the hair covers the edge of the face
 #   flare   extra width (+) or taper (-) at the ends
-SHORT = dict(tv=9, sv=1.5, fringe="none", drop=None, hl=0.15, end=None, ends="blunt", frame=4, flare=0)
-HANG = dict(tv=8, sv=9, fringe="curtain", drop=0.30, hl=0.15, end=28, ends="layered", frame=7, flare=-4)
-
-CUTS = {
-    # oval
-    "Textured crop": dict(SHORT, tv=10, fringe="soft"),
-    "Pixie cut": dict(SHORT, sv=3, fringe="side", drop=0.36),
-    "Short tapered curls": dict(SHORT, tv=16),
-    "Blunt bob": dict(HANG, end=4, ends="blunt", flare=0),
-    "Medium side part": dict(HANG, end=-28, sv=7, frame=3, fringe="side", drop=0.34),
-    "Shoulder-length layers": dict(HANG, end=30, sv=10, frame=6),
-    "Long layers": dict(HANG, end="bottom", sv=10, frame=6),
-    # round
-    "Quiff with short sides": dict(SHORT, tv=28, hl=0.14),
-    "Pixie with volume on top": dict(SHORT, tv=20, sv=3, fringe="side", drop=0.34),
-    "High-top curls with tapered sides": dict(SHORT, tv=34),
-    "Long bob below the chin": dict(HANG, end=18, ends="blunt", sv=7, frame=8, flare=0),
-    "Layered cut with a side part": dict(HANG, end=26, sv=10, fringe="side", drop=0.36),
-    "Long face-framing layers": dict(HANG, end="bottom", sv=8, frame=12),
-    # square
-    "Crew cut": dict(SHORT, tv=5, sv=1, hl=0.13),
-    "Textured crop with a soft fringe": dict(SHORT, tv=10, fringe="soft"),
-    "Soft pixie with a side-swept fringe": dict(SHORT, tv=10, sv=3, fringe="side", drop=0.42),
-    "Wavy long bob": dict(HANG, end=18, sv=11, frame=8, flare=0),
-    "Long soft layers": dict(HANG, end="bottom", sv=9),
-    "Long curls": dict(HANG, end=45, sv=16, frame=8, flare=4),
-    # oblong
-    "Side-parted crop with fuller sides": dict(SHORT, tv=6, sv=6, fringe="side", drop=0.34),
-    "French crop": dict(SHORT, tv=7, fringe="full", drop=0.33),
-    "Pixie with a long side fringe": dict(SHORT, tv=8, sv=4, fringe="side", drop=0.46),
-    "Chin-length bob with a fringe": dict(HANG, end=2, ends="blunt", sv=12, fringe="full", drop=0.37, flare=0),
-    "Curly bob": dict(HANG, end=4, sv=16, frame=8, drop=0.32, flare=2),
-    "Shoulder-length waves with a curtain fringe": dict(HANG, end=28, sv=12, drop=0.42),
-    "Long layers with a fringe": dict(HANG, end="bottom", sv=12, frame=6, fringe="full", drop=0.37),
-    # heart
-    "Crop with a side-swept fringe": dict(SHORT, fringe="side", drop=0.40),
-    "Textured pixie with a side-swept fringe": dict(SHORT, tv=11, sv=4, fringe="side", drop=0.42),
-    "Tapered curls with a fringe": dict(SHORT, tv=16, fringe="full", drop=0.33),
-    "Chin-length bob": dict(HANG, end=2, ends="blunt", sv=12, flare=0),
-    "Shoulder-length cut with layers from the chin down": dict(HANG, end=30, frame=6, flare=6),
-    "Long layers with a curtain fringe": dict(HANG, end="bottom", drop=0.42),
-    # diamond
-    "Textured fringe crop": dict(SHORT, tv=10, fringe="soft", drop=0.34),
-    "Side part with length on top": dict(SHORT, tv=14, fringe="side", drop=0.30),
-    "Pixie with a full fringe": dict(SHORT, sv=3, fringe="full", drop=0.37),
-    "Short curls with a curly fringe": dict(SHORT, tv=16, sv=5, fringe="full", drop=0.34),
-    "Shoulder-length shag with a curtain fringe": dict(HANG, end=28, sv=12, frame=8, drop=0.42),
-    "Long layers with a side-swept fringe": dict(HANG, end="bottom", frame=6, fringe="side", drop=0.42),
-    # triangle
-    "Quiff with tapered sides": dict(SHORT, tv=26, hl=0.14),
-    "Textured crop with a fuller top": dict(SHORT, tv=16, fringe="soft"),
-    "Pixie with volume at the crown": dict(SHORT, tv=18, sv=4, fringe="side", drop=0.36),
-    "Layered cut with volume at the temples": dict(HANG, end=10, sv=16, frame=6, flare=-12, fringe="side", drop=0.36),
-    "Shoulder-length cut with a side-swept fringe": dict(HANG, end=28, sv=8, frame=6, fringe="side", drop=0.42),
-    "Long layers with crown volume": dict(HANG, end="bottom", tv=20, frame=6),
-}
+# The settings live in docs/cut-specs.json, because the page (docs/cuts.js)
+# uses the same ones to draw a cut over the user's photo.
+CUTS = json.loads((ROOT / "docs" / "cut-specs.json").read_text(encoding="utf-8"))
 
 # Outline texture: wave height and wave length in pixels.
 TEXTURE = {

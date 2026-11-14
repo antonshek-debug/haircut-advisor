@@ -9,6 +9,7 @@ import {
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.3/vision_bundle.mjs";
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/+esm";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+import { loadSpecs, renderCut } from "./cuts.js";
 
 const MEDIAPIPE_WASM = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.3/wasm";
 const MODEL_URL =
@@ -193,8 +194,19 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
 });
 
+// Clean copy of the photo (no measurement lines), used to draw haircuts on.
+// It stays in the page's memory and is never uploaded.
+const photo = document.createElement("canvas");
+
+// Hair-shape settings per cut. If they do not load, cuts show the neutral
+// drawings from docs/cuts/ instead.
+let cutSpecs = null;
+loadSpecs()
+  .then((specs) => (cutSpecs = specs))
+  .catch((err) => console.error(err));
+
 let landmarker = null;
-let current = null; // { m, top2 } for the photo on screen
+let current = null; // { m, top2, points } for the photo on screen
 let pendingRow = null; // row that still has to be saved
 
 async function loadModel() {
@@ -228,6 +240,9 @@ async function drawPhoto(file) {
     canvas.width = Math.round(img.naturalWidth * scale);
     canvas.height = Math.round(img.naturalHeight * scale);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    photo.width = canvas.width;
+    photo.height = canvas.height;
+    photo.getContext("2d", { willReadFrequently: true }).drawImage(canvas, 0, 0);
     canvas.hidden = false;
   } finally {
     URL.revokeObjectURL(url);
@@ -366,7 +381,7 @@ async function analyse(file) {
   }
 
   el("reliability").textContent = "Photo checks passed.";
-  current = { m, top2: classify(m).slice(0, 2) };
+  current = { m, top2: classify(m).slice(0, 2), points };
   choicesEl.hidden = false;
   statusEl.textContent = "Photo measured. Now pick your choices below.";
 }
@@ -387,11 +402,30 @@ function cutDrawing(shape, cut) {
   return img;
 }
 
-export function showCuts(cuts, shape) {
+// The cut drawn over the user's own photo, or null if that is not possible.
+function cutOnPhoto(cut, texture) {
+  const spec = cutSpecs?.[cut.name];
+  if (!spec || !current?.points || !photo.width) return null;
+  try {
+    const picture = renderCut(photo, current.points, spec, texture);
+    picture.className = "cut-photo";
+    picture.setAttribute("role", "img");
+    picture.setAttribute("aria-label", `Sketch of the cut on your photo: ${cut.name}`);
+    return picture;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+export function showCuts(cuts, shape, texture) {
+  let onPhoto = 0;
   el("cuts").replaceChildren(
     ...cuts.map((cut) => {
       const li = document.createElement("li");
-      li.append(cutDrawing(shape, cut));
+      const picture = cutOnPhoto(cut, texture);
+      if (picture) onPhoto++;
+      li.append(picture ?? cutDrawing(shape, cut));
       const name = document.createElement("span");
       name.className = "cut-name";
       name.textContent = cut.name;
@@ -405,6 +439,10 @@ export function showCuts(cuts, shape) {
       return li;
     })
   );
+  el("cuts-note").textContent =
+    onPhoto === cuts.length
+      ? "A sketch of the cut on your photo. Your photo stays on your phone."
+      : "Drawings show the cut, not you.";
 }
 
 // Insert only. The page never reads the row back (it has no right to).
@@ -460,7 +498,7 @@ formEl.addEventListener("submit", async (event) => {
   const cuts = pickHaircuts(data, choices);
   el("shape-1").textContent = `Closest shape: ${capital(first.shape)} (${percent(first.score)})`;
   el("shape-2").textContent = `Second closest: ${capital(second.shape)} (${percent(second.score)})`;
-  showCuts(cuts, first.shape);
+  showCuts(cuts, first.shape, choices.texture);
   el("avoid").textContent = cuts[0].avoid;
   el("code").textContent = "";
   choicesEl.hidden = true;

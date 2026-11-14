@@ -176,3 +176,14 @@ summary { font-weight: 600; min-height: 44px; display: flex; align-items: center
   border-radius: 10px;
   background: #ffffff;
 }
+
+/* ---- Phase 4c: the cut drawn on the user's photo ---- */
+#cuts .cut-photo {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin: 0 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
