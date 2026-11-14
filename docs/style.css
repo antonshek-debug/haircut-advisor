@@ -104,3 +104,63 @@ table { width: 100%; border-collapse: collapse; }
 th, td { padding: 10px 4px; border-bottom: 1px solid var(--line); text-align: left; }
 th { font-weight: 400; }
 td { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---- Phase 4: choices, result, code ---- */
+h3 { font-size: 1rem; margin: 18px 0 6px; }
+
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin: 0 0 12px;
+  padding: 8px 12px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+}
+
+legend { font-weight: 600; padding: 0 4px; }
+
+fieldset label { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+fieldset input { width: 20px; height: 20px; accent-color: var(--accent); }
+
+button.btn {
+  width: 100%;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+}
+button.btn.primary { background: var(--accent); }
+button.btn:disabled { opacity: 0.45; cursor: default; }
+
+.shape { font-size: 1.25rem; font-weight: 700; margin: 0; }
+
+#cuts { padding-left: 22px; margin: 0; }
+#cuts li { margin-bottom: 12px; }
+#cuts .cut-name { font-weight: 600; }
+#cuts .cut-meta { color: var(--muted); font-size: 0.875rem; }
+#cuts .cut-reason { display: block; }
+
+.caveat {
+  color: var(--muted);
+  font-size: 0.875rem;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+#code-box {
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 12px;
+  text-align: center;
+}
+#code-box p { margin: 0 0 6px; }
+#code {
+  font: 700 2rem/1.2 ui-monospace, "SF Mono", Consolas, monospace;
+  letter-spacing: 0.2em;
+  min-height: 2.4rem;
+}
+
+details { margin-top: 20px; }
+summary { font-weight: 600; min-height: 44px; display: flex; align-items: center; cursor: pointer; }

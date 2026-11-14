@@ -10,9 +10,10 @@
   <main>
     <h1>Haircut Advisor</h1>
 
+    <!-- Step 1: consent, shown before the camera -->
     <p class="consent">Your photo stays on your phone. Only 4 measurements and your choices are saved. No name.</p>
-    <p class="small">Test version: nothing is saved yet.</p>
 
+    <!-- Step 2: photo -->
     <div class="buttons">
       <label class="btn primary">
         Take photo
@@ -24,6 +25,7 @@
       </label>
     </div>
 
+    <p class="small">If the camera does not open, allow camera access for your browser in the phone settings, or use "Choose from gallery".</p>
     <p class="small">Face the camera, keep a neutral face, and move hair off your forehead.</p>
 
     <p id="status" role="status">Loading the face model…</p>
@@ -32,8 +34,58 @@
 
     <ul id="warnings" hidden></ul>
 
+    <!-- Step 3: choices. The user picks; the page never guesses. -->
+    <section id="choices" hidden>
+      <h2>Your choices</h2>
+      <form id="choices-form">
+        <fieldset>
+          <legend>Length you want</legend>
+          <label><input type="radio" name="length" value="any" checked> Any</label>
+          <label><input type="radio" name="length" value="short"> Short</label>
+          <label><input type="radio" name="length" value="medium"> Medium</label>
+          <label><input type="radio" name="length" value="long"> Long</label>
+        </fieldset>
+        <fieldset>
+          <legend>Your hair texture</legend>
+          <label><input type="radio" name="texture" value="straight" required> Straight</label>
+          <label><input type="radio" name="texture" value="wavy"> Wavy</label>
+          <label><input type="radio" name="texture" value="curly"> Curly</label>
+          <label><input type="radio" name="texture" value="coily"> Coily</label>
+        </fieldset>
+        <fieldset>
+          <legend>Style you want</legend>
+          <label><input type="radio" name="style" value="masculine" required> Masculine</label>
+          <label><input type="radio" name="style" value="feminine"> Feminine</label>
+          <label><input type="radio" name="style" value="neutral"> Neutral</label>
+        </fieldset>
+        <button id="show-cuts" class="btn primary" type="submit">Show my haircuts</button>
+      </form>
+    </section>
+
+    <!-- Step 4: result -->
     <section id="result" hidden>
-      <h2>Measurements</h2>
+      <h2>Your result</h2>
+      <p id="shape-1" class="shape"></p>
+      <p id="shape-2" class="small"></p>
+
+      <h3>Haircuts to try</h3>
+      <ol id="cuts"></ol>
+
+      <h3>Avoid</h3>
+      <p id="avoid"></p>
+
+      <p class="caveat">Face-shape haircut rules are stylist conventions, not science. Measurements are approximate.</p>
+
+      <div id="code-box">
+        <p class="small">Your code</p>
+        <p id="code"></p>
+        <p id="save-status" class="small" role="status"></p>
+        <button id="retry-save" class="btn" type="button" hidden>Try saving again</button>
+      </div>
+    </section>
+
+    <details id="measurements" hidden>
+      <summary>Measurements</summary>
       <p id="reliability"></p>
       <table>
         <tbody>
@@ -44,7 +96,7 @@
         </tbody>
       </table>
       <p id="details" class="small"></p>
-    </section>
+    </details>
   </main>
 
   <script type="module" src="app.js"></script>
