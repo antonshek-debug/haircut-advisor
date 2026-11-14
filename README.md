@@ -2,6 +2,18 @@
 
 A phone page measures a selfie, names the closest face shape and suggests haircuts. An MCP server lets Claude read the saved results. The full plan is in [PLAN.md](PLAN.md).
 
+## Phone page (live)
+
+https://antonshek-debug.github.io/haircut-advisor/
+
+GitHub Pages serves the `docs/` folder of the `main` branch. A push to `main` updates the page after about a minute.
+
+QR #1 for this address is `tools/qr-page.png`. To make it again, or to make a QR code for another address:
+
+```bash
+uv run tools/make_qr.py https://antonshek-debug.github.io/haircut-advisor/ tools/qr-page.png
+```
+
 ## Phone page (local preview)
 
 The page is in `docs/`. It needs a web server; opening `index.html` as a file does not work.
