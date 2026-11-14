@@ -18,6 +18,7 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | not run |
 | 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | not run |
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work | 8 | not run |
+| 13 | Open a result on the phone | Every suggested cut shows its drawing; a cut with a missing file shows without a picture and without an error | 4b | PC part pass; phone not run |
 
 ## Run log
 
@@ -86,6 +87,21 @@ Run 2026-11-14. Live page: https://antonshek-debug.github.io/haircut-advisor/ (G
 | Live page reads `haircuts` | HTTP 200 | HTTP 200, 7 oval rows | pass |
 | `tools/qr-page.png` decodes | The live page address | Decoded with zxing-cpp to the live address | pass |
 | Tracked files hold no secrets | None | None found; `.env` is not tracked | pass |
+
+### Phase 4b — Haircut drawings
+
+Run 2026-11-14 by Claude in the browser pane, local preview. The phone part of test 13 and the tester's review of the drawings are still open.
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| Every row in `haircuts` has a drawing | 46 files, names match the page's rule | 46 rows in the live table, 0 missing files | pass |
+| Test 13, PC: suggested cuts show drawings | A drawing next to each cut | 3 of 3 real cuts loaded their drawing | pass |
+| Test 13, PC: cut with a missing file | Shown without a picture, no error | Shown without a picture; only the browser's own 404 line in the console, no script error | pass |
+| Test 13, phone | Every suggested cut shows its drawing | not run | open |
+
+Notes:
+- Drawings are made by `tools/make_cuts.py` (added to the plan's file list with the tester's approval): a face outline per shape plus hair parts.
+- Each cut is drawn once, in the first texture listed for it.
 
 ## Tuning data (for Phase 4)
 

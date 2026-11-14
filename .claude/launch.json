@@ -4,8 +4,26 @@
     {
       "name": "phone-page",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8000", "--directory", "docs"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8000",
+        "--directory",
+        "docs"
+      ],
       "port": 8000
+    },
+    {
+      "name": "repo-root",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8010",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "port": 8010
     }
   ]
 }

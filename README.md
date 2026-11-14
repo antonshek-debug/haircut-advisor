@@ -14,6 +14,16 @@ QR #1 for this address is `tools/qr-page.png`. To make it again, or to make a QR
 uv run tools/make_qr.py https://antonshek-debug.github.io/haircut-advisor/ tools/qr-page.png
 ```
 
+## Haircut drawings
+
+`docs/cuts/` holds one SVG line drawing per haircut, named `<face shape>-<cut name in lower case with hyphens>.svg`. To make them again after changing the `haircuts` table (needs `.env`):
+
+```bash
+python tools/make_cuts.py
+```
+
+It also writes `tools/cuts-review.html`, one page with every drawing (not tracked by git).
+
 ## Phone page (local preview)
 
 The page is in `docs/`. It needs a web server; opening `index.html` as a file does not work.
