@@ -12,7 +12,7 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 4 | Head turned sideways | "Face the camera" warning | 3 | pass (2026-11-14) |
 | 5 | `suggest_haircuts("heart", length="short")` | Only short cuts | 7 | not run |
 | 6 | `suggest_haircuts("blob")` | List of valid shapes | 7 | not run |
-| 7 | Scan QR on iPhone and Android | Page opens, camera works on both | 5 | not run |
+| 7 | Scan QR on iPhone and Android | Page opens, camera works on both | 5 | pass (2026-11-14) |
 | 8 | Camera permission denied | Clear message; gallery still works | 4 | pass (2026-11-14) |
 | 9 | Use the anon key to read `results` | Blocked | 2 | pass (2026-11-14) |
 | 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | not run |
@@ -73,6 +73,19 @@ Notes:
 - In 272 of the 336 combinations at least one cut is a "close match, not exact", because there are only 6–7 cuts per shape.
 - Test 8 is covered by a permanent hint under the buttons. The page cannot detect a denied camera, because "Take photo" hands off to the phone's camera app.
 - A photo with a quality warning gets no shape and is not saved.
+
+### Phase 5 — GitHub Pages and QR #1
+
+Run 2026-11-14. Live page: https://antonshek-debug.github.io/haircut-advisor/ (GitHub Pages, `main` branch, `/docs`). Test 7 was run and reported by the tester; the other checks were run by Claude.
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| Test 7: scan QR #1 on an iPhone | Page opens, camera works | As expected | pass |
+| Test 7: scan QR #1 on an Android phone | Page opens, camera works | As expected | pass |
+| Live page loads over HTTPS | No console errors, model loads | Status "Ready", no errors | pass |
+| Live page reads `haircuts` | HTTP 200 | HTTP 200, 7 oval rows | pass |
+| `tools/qr-page.png` decodes | The live page address | Decoded with zxing-cpp to the live address | pass |
+| Tracked files hold no secrets | None | None found; `.env` is not tracked | pass |
 
 ## Tuning data (for Phase 4)
 

@@ -33,6 +33,7 @@ Why measure instead of letting Claude look at the photo: the same photo gives th
 | Phone page hosting | GitHub Pages from a **public** repo |
 | MCP server | Python + FastMCP. It runs locally (stdio) first, then on Render (HTTP). Phase 8 is required. |
 | Build tool | Claude Code tab |
+| Haircut pictures (added 2026-11-14) | One line drawing per cut on a neutral face outline of that shape. **Not the user's face.** No photo overlay and no AI-generated try-on, because the photo must stay on the phone. |
 
 ## 3. Architecture
 ```
@@ -59,6 +60,7 @@ haircut-advisor/
     index.html
     app.js
     style.css
+    cuts/            one SVG drawing per haircut (Phase 4b)
   db/
     schema.sql       tables + Row Level Security rules
     haircuts_seed.sql
@@ -109,6 +111,7 @@ Photo-quality checks: no face found; more than one face; head turned or tilted; 
 - Step 2: a "Take photo" button (`<input type="file" accept="image/*" capture="user">`). It opens the front camera or the gallery.
 - Step 3: choices: length, texture, style. **The user picks style. The page never guesses gender, age or ethnicity.**
 - Step 4: the result: top 2 shapes, 3–5 cuts with reasons, 1 cut to avoid, the caveat, and the code.
+- Haircut pictures (Phase 4b): each suggested cut shows a line drawing from `docs/cuts/`. The file name is the face shape plus the cut name in lower case with hyphens, for example `heart-chin-length-bob.svg`, so the database does not change. If a file is missing, the cut shows without a picture. A label under the pictures says: "Drawings show the cut, not you."
 - Caveat text on every result: "Face-shape haircut rules are stylist conventions, not science. Measurements are approximate."
 - Pin the MediaPipe library version and the model file URL. Do not use `@latest`.
 
@@ -158,6 +161,7 @@ Write the expected result before building. Record the actual result after each p
 | 10 | `get_result("ZZZZZZ")` | "No result with that code" |
 | 11 | `get_result(<real code from phone>)` | Same shape the phone showed |
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work |
+| 13 | Open a result on the phone | Every suggested cut shows its drawing; a cut with a missing file shows without a picture and without an error |
 
 ## 12. Phases
 Each phase ends with its checks passing and a git commit with a short message.
@@ -168,6 +172,7 @@ Each phase ends with its checks passing and a git commit with a short message.
 | 2 | Supabase: project, `schema.sql`, security rules, draft `haircuts_seed.sql` → **I review** → seed | Test 9 passes; haircuts table has 5–8 rows per shape |
 | 3 | Page v1: photo → landmarks → 4 measurements on screen, nothing saved | Tests 1–4 pass on my phone (local preview) |
 | 4 | Page v2: shape + choices + haircuts + save + code; tune cut-offs | A row appears in `results`; test 8 passes |
+| 4b | Haircut pictures: one SVG per cut in `docs/cuts/` → **I review** → show them on the result screen | Test 13 passes; every row in `haircuts` has a drawing |
 | 5 | Public GitHub repo, GitHub Pages on `docs/`, `make_qr.py` → QR #1 | Test 7 passes |
 | 6 | MCP scaffold: no tools, stdio, connected to Claude Desktop and Claude Code | Server shows in both clients |
 | 7 | Tools 1 → 2 → 3, one at a time, each tested in both clients before the next | Tests 5, 6, 10, 11 pass |
