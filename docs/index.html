@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Haircut Advisor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Haircut Advisor</h1>
+
+    <p class="consent">Your photo stays on your phone. Only 4 measurements and your choices are saved. No name.</p>
+    <p class="small">Test version: nothing is saved yet.</p>
+
+    <div class="buttons">
+      <label class="btn primary">
+        Take photo
+        <input id="camera" class="visually-hidden" type="file" accept="image/*" capture="user" disabled>
+      </label>
+      <label class="btn">
+        Choose from gallery
+        <input id="gallery" class="visually-hidden" type="file" accept="image/*" disabled>
+      </label>
+    </div>
+
+    <p class="small">Face the camera, keep a neutral face, and move hair off your forehead.</p>
+
+    <p id="status" role="status">Loading the face model…</p>
+
+    <canvas id="preview" hidden></canvas>
+
+    <ul id="warnings" hidden></ul>
+
+    <section id="result" hidden>
+      <h2>Measurements</h2>
+      <p id="reliability"></p>
+      <table>
+        <tbody>
+          <tr><th scope="row">Face length ÷ cheekbone width</th><td id="m-length"></td></tr>
+          <tr><th scope="row">Forehead width ÷ cheekbone width</th><td id="m-forehead"></td></tr>
+          <tr><th scope="row">Jaw width ÷ cheekbone width</th><td id="m-jaw"></td></tr>
+          <tr><th scope="row">Jaw angle</th><td id="m-angle"></td></tr>
+        </tbody>
+      </table>
+      <p id="details" class="small"></p>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
