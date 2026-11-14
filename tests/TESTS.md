@@ -88,6 +88,24 @@ Readings from the tester's phone, 2026-11-14, all with "Photo checks passed". 4 
 
 Photo-to-photo noise for one person is about ±0.013 for length, ±0.002 for forehead, ±0.009 for jaw and ±2.3° for jaw angle. Cut-offs closer together than this cannot separate shapes reliably.
 
+### Readings from 7 other people (2026-11-14)
+
+Rows 4–10 of `results`, pasted by the tester from the dashboard. Each row is a different person. No shape labels are known for them.
+
+| id | Length | Forehead | Jaw | Jaw angle | Version 1 result |
+|---|---|---|---|---|---|
+| 4 | 1.192 | 0.887 | 0.785 | 138.9° | round 0.398, oval 0.291 |
+| 5 | 1.161 | 0.850 | 0.801 | 138.5° | round 0.518, square 0.157 |
+| 6 | 1.204 | 0.880 | 0.801 | 138.1° | round 0.366, oval 0.283 |
+| 7 | 1.149 | 0.892 | 0.799 | 138.8° | round 0.562, square 0.253 |
+| 8 | 1.164 | 0.877 | 0.750 | 151.8° | round 0.511, oval 0.205 |
+| 9 | 1.145 | 0.786 | 0.837 | 128.4° | triangle 0.810, round 0.088 |
+| 10 | 1.218 | 0.848 | 0.822 | 136.5° | triangle 0.281, round 0.253 |
+
+All 8 faces (these 7 plus the tester's average): length 1.145–1.242 (mean 1.184), forehead 0.786–0.892 (median 0.879), jaw 0.750–0.837 (mean 0.799), jaw angle 128.4–151.8° (mean 139.1°).
+
+Finding: the version 1 length centres are too high. No face reaches the oval centre (1.30), and the oblong centre (1.42) is far above every face, so 5 of 8 faces come out as round. Cut-offs are not changed yet: without a known shape for at least some faces, moving the centres is a guess.
+
 ## Cut-off changes (Phase 4)
 
 ### Version 1 — first guess (2026-11-14)
