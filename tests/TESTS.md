@@ -56,6 +56,20 @@ Notes:
 - The page has two buttons, "Take photo" (front camera) and "Choose from gallery", because `capture="user"` hides the gallery on most phones.
 - Phase 3 does not name a shape yet, so test 1 covers measurements only.
 
+## Tuning data (for Phase 4)
+
+Readings from the tester's phone, 2026-11-14, all with "Photo checks passed". Assumed to be 4 different photos of the same person (to confirm).
+
+| Photo | Length | Forehead | Jaw | Jaw angle | Head turn / up-down / lean |
+|---|---|---|---|---|---|
+| A | 1.231 | 0.889 | 0.798 | 139.7° | not recorded |
+| B | 1.256 | 0.885 | 0.802 | 142.9° | -3° / 2° / 1° |
+| C | 1.236 | 0.887 | 0.785 | 144.3° | -1° / 7° / 0° |
+| D | 1.247 | 0.885 | 0.803 | 141.3° | -2° / 2° / 0° |
+| Range | 0.025 | 0.004 | 0.018 | 4.6° | |
+
+Photo-to-photo noise for one person is about ±0.013 for length, ±0.002 for forehead, ±0.009 for jaw and ±2.3° for jaw angle. Cut-offs closer together than this cannot separate shapes reliably.
+
 ## Cut-off changes (Phase 4)
 
 None yet.
