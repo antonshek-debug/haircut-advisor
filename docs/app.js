@@ -51,7 +51,7 @@ const LM = {
 };
 
 // ---------------------------------------------------------------------------
-// Shape scoring. FIRST GUESS: record every change in tests/TESTS.md.
+// Shape scoring. Record every change in tests/TESTS.md.
 //
 // Each shape has a centre: the 4 measurements of a typical face of that shape.
 // A face is scored by how close it is to each centre. SPREAD says how far a
@@ -62,15 +62,17 @@ const LM = {
 // ---------------------------------------------------------------------------
 export const SHAPES = {
   //          length  forehead  jaw    jaw angle
-  oval:     { length: 1.30, forehead: 0.88, jaw: 0.78, angle: 142 },
-  round:    { length: 1.15, forehead: 0.88, jaw: 0.82, angle: 147 },
-  square:   { length: 1.18, forehead: 0.90, jaw: 0.87, angle: 134 },
-  oblong:   { length: 1.42, forehead: 0.88, jaw: 0.80, angle: 140 },
-  heart:    { length: 1.28, forehead: 0.93, jaw: 0.72, angle: 146 },
-  diamond:  { length: 1.30, forehead: 0.82, jaw: 0.73, angle: 144 },
-  triangle: { length: 1.25, forehead: 0.82, jaw: 0.88, angle: 138 },
+  // Version 2 (2026-11-14): length and jaw-angle centres lowered to fit
+  // readings from 8 people. Assumes the average face in that sample is oval.
+  oval:     { length: 1.19, forehead: 0.88, jaw: 0.78, angle: 139 },
+  round:    { length: 1.13, forehead: 0.88, jaw: 0.82, angle: 144 },
+  square:   { length: 1.14, forehead: 0.90, jaw: 0.87, angle: 131 },
+  oblong:   { length: 1.27, forehead: 0.88, jaw: 0.80, angle: 138 },
+  heart:    { length: 1.19, forehead: 0.93, jaw: 0.72, angle: 143 },
+  diamond:  { length: 1.20, forehead: 0.82, jaw: 0.73, angle: 141 },
+  triangle: { length: 1.17, forehead: 0.82, jaw: 0.88, angle: 135 },
 };
-const SPREAD = { length: 0.08, forehead: 0.04, jaw: 0.05, angle: 8 };
+const SPREAD = { length: 0.05, forehead: 0.04, jaw: 0.05, angle: 8 };
 const WEIGHT = { length: 1, forehead: 1, jaw: 1, angle: 0.5 };
 
 // Photo-quality limits (first guess).

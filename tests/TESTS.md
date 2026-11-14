@@ -138,3 +138,44 @@ Check with the 4 tuning readings (run in the browser pane):
 The top 2 shapes are the same for all 4 photos of the same person. Each centre also classifies as its own shape.
 
 Photo-quality limits are unchanged from Phase 3 (turn 15°, up/down 15°, lean 10°, mouth open 0.25, smile 0.4).
+
+### Version 2 — length and jaw-angle centres lowered (2026-11-14)
+
+Reason: with version 1, no face reached the oval length centre and 5 of 8 faces came out as round (see "Readings from 7 other people"). Approved by the tester.
+
+**Assumption: the average face in the 8-person sample is oval.** No real shape is known for any of the 8 people, so this is a fit to the data, not a check against known shapes.
+
+| Shape | Length (was) | Forehead | Jaw | Jaw angle (was) |
+|---|---|---|---|---|
+| oval | 1.19 (1.30) | 0.88 | 0.78 | 139° (142°) |
+| round | 1.13 (1.15) | 0.88 | 0.82 | 144° (147°) |
+| square | 1.14 (1.18) | 0.90 | 0.87 | 131° (134°) |
+| oblong | 1.27 (1.42) | 0.88 | 0.80 | 138° (140°) |
+| heart | 1.19 (1.28) | 0.93 | 0.72 | 143° (146°) |
+| diamond | 1.20 (1.30) | 0.82 | 0.73 | 141° (144°) |
+| triangle | 1.17 (1.25) | 0.82 | 0.88 | 135° (138°) |
+| Spread | 0.05 (0.08) | 0.04 | 0.05 | 8° |
+
+Forehead and jaw centres, the weights and the photo-quality limits are unchanged.
+
+Check: the scoring code from `docs/app.js`, run with Node on every logged reading.
+
+| Face | Version 1 | Version 2 |
+|---|---|---|
+| Tester, photo A | oval 0.388, round 0.271 | oblong 0.409, oval 0.375 |
+| Tester, photo B | oval 0.453, round 0.212 | oblong 0.621, oval 0.254 |
+| Tester, photo C | oval 0.427, round 0.258 | oblong 0.404, oval 0.363 |
+| Tester, photo D | oval 0.424, round 0.235 | oblong 0.553, oval 0.296 |
+| 4 | round 0.398, oval 0.291 | oval 0.472, round 0.156 |
+| 5 | round 0.518, square 0.157 | oval 0.338, round 0.298 |
+| 6 | round 0.366, oval 0.283 | oval 0.442, oblong 0.211 |
+| 7 | round 0.562, square 0.253 | round 0.384, oval 0.333 |
+| 8 | round 0.511, oval 0.205 | oval 0.366, round 0.223 |
+| 9 | triangle 0.810, round 0.088 | triangle 0.833, round 0.051 |
+| 10 | triangle 0.281, round 0.253 | oval 0.307, oblong 0.274 |
+
+- Mix across the 8 people: 5 oval, 1 round, 1 triangle, 1 oblong.
+- Test 1, shape part: the tester's 4 photos still give the same top 2 in the same order (oblong, then oval). Photos A and C are close calls (about 0.04 apart).
+- Each centre still classifies as its own shape.
+- Not re-run on a phone after the change. Rows already in `results` keep their version 1 shapes.
+
