@@ -381,27 +381,10 @@ async function analyse(file) {
   statusEl.textContent = "Photo measured. Now pick your choices below.";
 }
 
-// File name part: lower case, hyphens. Same rule as slug() in tools/make_cuts.py.
-export const slug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-
-// Drawing for a cut: docs/cuts/<face shape>-<cut name>.svg. The database
-// holds no file names. If the file is missing, the cut shows without a picture.
-function cutDrawing(shape, cut) {
-  const img = document.createElement("img");
-  img.className = "cut-drawing";
-  img.alt = `Drawing of the cut: ${cut.name}`;
-  img.width = 200;
-  img.height = 260;
-  img.addEventListener("error", () => img.remove());
-  img.src = `cuts/${slug(shape)}-${slug(cut.name)}.svg`;
-  return img;
-}
-
-export function showCuts(cuts, shape) {
+export function showCuts(cuts) {
   el("cuts").replaceChildren(
     ...cuts.map((cut) => {
       const li = document.createElement("li");
-      li.append(cutDrawing(shape, cut));
       const name = document.createElement("span");
       name.className = "cut-name";
       name.textContent = cut.name;
@@ -562,7 +545,7 @@ formEl.addEventListener("submit", async (event) => {
   const cuts = pickHaircuts(data, choices);
   el("shape-1").textContent = `Closest shape: ${capital(first.shape)} (${percent(first.score)})`;
   el("shape-2").textContent = `Second closest: ${capital(second.shape)} (${percent(second.score)})`;
-  showCuts(cuts, first.shape);
+  showCuts(cuts);
   showCelebs(first.shape, choices.style, current.thumb);
   el("avoid").textContent = cuts[0].avoid;
   el("code").textContent = "";

@@ -18,8 +18,8 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | not run |
 | 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | not run |
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work | 8 | not run |
-| 13 | Open a result on the phone | Every suggested cut shows its drawing; a cut with a missing file shows without a picture and without an error | 4b | PC part pass (2026-11-14); phone part replaced by test 14 |
-| 14 | Open a result on the phone | The result shows my photo next to 3 or 4 people for my shape and style; each has a photo credit and a source link; the page sends no image to any server | 4c | PC part pass; phone not run |
+| 13 | (removed 2026-11-15 with the haircut drawings) | — | 4b | removed |
+| 14 | Open a result on the phone | The result shows my photo next to 3 or 4 people for my shape and style; each has a photo credit and a source link; the page sends no image to any server | 4c | pass (2026-11-15) |
 
 ## Run log
 
@@ -104,13 +104,17 @@ Notes:
 - Drawings are made by `tools/make_cuts.py` (added to the plan's file list with the tester's approval): a face outline per shape plus hair parts.
 - Each cut is drawn once, in the first texture listed for it.
 
+### Phase 4b — drawings removed (2026-11-15)
+
+The tester asked for the drawings to be removed entirely once the people comparison worked. Removed: the 46 files in `docs/cuts/`, `docs/cut-specs.json`, `tools/make_cuts.py`, and the drawing code, label and styles on the page. Test 13 is removed with them. The Phase 4b results above are kept as a record.
+
 ### Phase 4c — first attempt: haircut drawn on the user's photo (dropped)
 
-Built 2026-11-14, checked on the PC with a synthetic face (176 drawings, no errors), tried by the tester on a phone, and dropped on 2026-11-15: it did not look good enough. The code was removed before anything was pushed. The neutral drawings from Phase 4b stay.
+Built 2026-11-14, checked on the PC with a synthetic face (176 drawings, no errors), tried by the tester on a phone, and dropped on 2026-11-15: it did not look good enough. The code was removed before anything was pushed.
 
 ### Phase 4c — People with a similar face shape
 
-Run 2026-11-15 by Claude in the browser pane, local preview. The tester's review of the list and the phone part of test 14 are still open.
+Run 2026-11-15 by Claude in the browser pane, local preview. The tester approved the list of 42 people for publishing on 2026-11-15 and ran the phone part of test 14 on the live page.
 
 | Check | Expected | Actual | Result |
 |---|---|---|---|
@@ -119,7 +123,7 @@ Run 2026-11-15 by Claude in the browser pane, local preview. The tester's review
 | Every photo is freely licensed | CC BY, CC BY-SA, CC0 or public domain, from Wikimedia Commons | 42 of 42, each with author and licence recorded | pass |
 | Every shape and style gives enough people | 3 (masculine, feminine) or 4 (neutral) | All 21 combinations give 3 or 4 | pass |
 | Test 14, PC: section shows on the result | "You" tile plus the people, with credits and links | Shown for oblong/neutral with a stand-in for the user's photo; 4 photos loaded; no console errors | pass |
-| Test 14, phone | My photo next to the people | not run | open |
+| Test 14, phone | My photo next to the people | Reported by the tester on the live page: it works | pass |
 | Test 14: no image sent to a server | No upload | The user's photo is only copied to a canvas in the page; not yet checked on a phone | open |
 
 Notes:

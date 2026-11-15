@@ -33,7 +33,7 @@ Why measure instead of letting Claude look at the photo: the same photo gives th
 | Phone page hosting | GitHub Pages from a **public** repo |
 | MCP server | Python + FastMCP. It runs locally (stdio) first, then on Render (HTTP). Phase 8 is required. |
 | Build tool | Claude Code tab |
-| Haircut pictures (added 2026-11-14) | One neutral line drawing per cut (Phase 4b). Not the user's face, no photo overlay and no AI-generated try-on. An overlay drawn on the user's photo was built and dropped on 2026-11-15 because it did not look good enough. |
+| Haircut pictures (added 2026-11-14, removed 2026-11-15) | None. Neutral line drawings (Phase 4b) and an overlay on the user's photo were both built and then removed, because neither looked good enough. The result shows people with a similar face shape instead (next row). |
 | People with a similar face shape (added 2026-11-15) | The result shows well-known people that style articles describe as having the user's face shape, next to the user's own photo. The labels are the articles' opinions: **nobody on the list is measured.** Photos are freely licensed ones from Wikimedia Commons, with a credit line. The user's photo is still never uploaded. |
 
 ## 3. Architecture
@@ -61,10 +61,8 @@ haircut-advisor/
     index.html
     app.js
     style.css
-    cuts/            one SVG drawing per haircut (Phase 4b)
     celebrities.json people per face shape, with source and photo credit (Phase 4c)
     celebs/          their photos, from Wikimedia Commons
-    cut-specs.json   hair-shape settings per cut, read by tools/make_cuts.py
   db/
     schema.sql       tables + Row Level Security rules
     haircuts_seed.sql
@@ -115,7 +113,6 @@ Photo-quality checks: no face found; more than one face; head turned or tilted; 
 - Step 2: a "Take photo" button (`<input type="file" accept="image/*" capture="user">`). It opens the front camera or the gallery.
 - Step 3: choices: length, texture, style. **The user picks style. The page never guesses gender, age or ethnicity.**
 - Step 4: the result: top 2 shapes, 3–5 cuts with reasons, 1 cut to avoid, the caveat, and the code.
-- Haircut pictures (Phase 4b): each suggested cut shows a line drawing from `docs/cuts/`. The file name is the face shape plus the cut name in lower case with hyphens, for example `heart-chin-length-bob.svg`, so the database does not change. If a file is missing, the cut shows without a picture. A label under the pictures says: "Drawings show the cut, not you."
 - People with a similar face shape (Phase 4c): under the haircuts, the result shows the user's own photo next to 3 well-known people listed under the user's closest shape and chosen style (2 feminine and 2 masculine for neutral). Each has a photo with a credit, the haircut they are often seen with, a link to more photos and a link to the source article. A note says the labels are opinions, nobody shown was measured, and the list does not say the user looks like them. **I review the list before it goes live.**
 - Caveat text on every result: "Face-shape haircut rules are stylist conventions, not science. Measurements are approximate."
 - Pin the MediaPipe library version and the model file URL. Do not use `@latest`.
@@ -166,7 +163,7 @@ Write the expected result before building. Record the actual result after each p
 | 10 | `get_result("ZZZZZZ")` | "No result with that code" |
 | 11 | `get_result(<real code from phone>)` | Same shape the phone showed |
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work |
-| 13 | Open a result on the phone | Every suggested cut shows its drawing; a cut with a missing file shows without a picture and without an error |
+| 13 | (removed 2026-11-15 with the haircut drawings) | — |
 | 14 | Open a result on the phone | The result shows my photo next to 3 or 4 people for my shape and style; each has a photo credit and a source link; the page sends no image to any server |
 
 ## 12. Phases
@@ -178,7 +175,7 @@ Each phase ends with its checks passing and a git commit with a short message.
 | 2 | Supabase: project, `schema.sql`, security rules, draft `haircuts_seed.sql` → **I review** → seed | Test 9 passes; haircuts table has 5–8 rows per shape |
 | 3 | Page v1: photo → landmarks → 4 measurements on screen, nothing saved | Tests 1–4 pass on my phone (local preview) |
 | 4 | Page v2: shape + choices + haircuts + save + code; tune cut-offs | A row appears in `results`; test 8 passes |
-| 4b | Haircut pictures: one SVG per cut in `docs/cuts/` → **I review** → show them on the result screen | Test 13 passes; every row in `haircuts` has a drawing |
+| 4b | Haircut pictures: built, published, then removed on 2026-11-15 | Removed |
 | 4c | People with a similar face shape: `celebrities.json` and photos → **I review** → show them on the result screen | Test 14 passes on my phone |
 | 5 | Public GitHub repo, GitHub Pages on `docs/`, `make_qr.py` → QR #1 | Test 7 passes |
 | 6 | MCP scaffold: no tools, stdio, connected to Claude Desktop and Claude Code | Server shows in both clients |
