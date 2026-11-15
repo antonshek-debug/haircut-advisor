@@ -177,13 +177,27 @@ summary { font-weight: 600; min-height: 44px; display: flex; align-items: center
   background: #ffffff;
 }
 
-/* ---- Phase 4c: the cut drawn on the user's photo ---- */
-#cuts .cut-photo {
+/* ---- Phase 4c: people with a similar face shape ---- */
+#celebs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 12px;
+  margin: 8px 0;
+}
+#celebs figure { margin: 0; min-width: 0; }
+#celebs img,
+#celebs canvas {
   display: block;
   width: 100%;
-  max-width: 260px;
-  height: auto;
-  margin: 0 0 8px;
-  border: 1px solid var(--line);
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center top;
   border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--line);
 }
+#celebs figcaption { font-size: 0.875rem; padding-top: 6px; }
+#celebs figcaption span { display: block; overflow-wrap: anywhere; }
+#celebs .celeb-name { font-size: 1rem; font-weight: 600; }
+#celebs .celeb-credit { color: var(--muted); font-size: 0.75rem; margin-top: 2px; }
+a { color: var(--accent); }

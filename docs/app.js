@@ -9,7 +9,6 @@ import {
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.3/vision_bundle.mjs";
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/+esm";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
-import { loadSpecs, renderCut } from "./cuts.js";
 
 const MEDIAPIPE_WASM = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.3/wasm";
 const MODEL_URL =
@@ -194,19 +193,17 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
 });
 
-// Clean copy of the photo (no measurement lines), used to draw haircuts on.
-// It stays in the page's memory and is never uploaded.
-const photo = document.createElement("canvas");
-
-// Hair-shape settings per cut. If they do not load, cuts show the neutral
-// drawings from docs/cuts/ instead.
-let cutSpecs = null;
-loadSpecs()
-  .then((specs) => (cutSpecs = specs))
+// Well-known people that style articles describe as having each face shape
+// (docs/celebrities.json, built by tools/make_celebs.py). Nobody on the list
+// was measured. If the list does not load, the section stays hidden.
+let celebs = null;
+fetch("celebrities.json")
+  .then((response) => (response.ok ? response.json() : Promise.reject(new Error(`HTTP ${response.status}`))))
+  .then((list) => (celebs = list))
   .catch((err) => console.error(err));
 
 let landmarker = null;
-let current = null; // { m, top2, points } for the photo on screen
+let current = null; // { m, top2, thumb } for the photo on screen
 let pendingRow = null; // row that still has to be saved
 
 async function loadModel() {
@@ -240,9 +237,6 @@ async function drawPhoto(file) {
     canvas.width = Math.round(img.naturalWidth * scale);
     canvas.height = Math.round(img.naturalHeight * scale);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    photo.width = canvas.width;
-    photo.height = canvas.height;
-    photo.getContext("2d", { willReadFrequently: true }).drawImage(canvas, 0, 0);
     canvas.hidden = false;
   } finally {
     URL.revokeObjectURL(url);
@@ -362,6 +356,7 @@ async function analyse(file) {
     }
   }
 
+  const thumb = faceThumb(points); // taken before the lines are drawn
   drawLines(points);
 
   el("m-length").textContent = m.length.toFixed(3);
@@ -381,7 +376,7 @@ async function analyse(file) {
   }
 
   el("reliability").textContent = "Photo checks passed.";
-  current = { m, top2: classify(m).slice(0, 2), points };
+  current = { m, top2: classify(m).slice(0, 2), thumb };
   choicesEl.hidden = false;
   statusEl.textContent = "Photo measured. Now pick your choices below.";
 }
@@ -402,30 +397,11 @@ function cutDrawing(shape, cut) {
   return img;
 }
 
-// The cut drawn over the user's own photo, or null if that is not possible.
-function cutOnPhoto(cut, texture) {
-  const spec = cutSpecs?.[cut.name];
-  if (!spec || !current?.points || !photo.width) return null;
-  try {
-    const picture = renderCut(photo, current.points, spec, texture);
-    picture.className = "cut-photo";
-    picture.setAttribute("role", "img");
-    picture.setAttribute("aria-label", `Sketch of the cut on your photo: ${cut.name}`);
-    return picture;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-}
-
-export function showCuts(cuts, shape, texture) {
-  let onPhoto = 0;
+export function showCuts(cuts, shape) {
   el("cuts").replaceChildren(
     ...cuts.map((cut) => {
       const li = document.createElement("li");
-      const picture = cutOnPhoto(cut, texture);
-      if (picture) onPhoto++;
-      li.append(picture ?? cutDrawing(shape, cut));
+      li.append(cutDrawing(shape, cut));
       const name = document.createElement("span");
       name.className = "cut-name";
       name.textContent = cut.name;
@@ -439,10 +415,98 @@ export function showCuts(cuts, shape, texture) {
       return li;
     })
   );
-  el("cuts-note").textContent =
-    onPhoto === cuts.length
-      ? "A sketch of the cut on your photo. Your photo stays on your phone."
-      : "Drawings show the cut, not you.";
+}
+
+// Small copy of the user's face for the comparison. It is cut from the photo
+// on the canvas and stays in the page; it is never uploaded.
+function faceThumb(points) {
+  const r = points[LM.cheekR];
+  const l = points[LM.cheekL];
+  const width = dist(r, l) * 1.9;
+  const height = width * 1.25;
+  const left = (r.x + l.x) / 2 - width / 2;
+  const top = points[LM.top].y - 0.45 * dist(points[LM.top], points[LM.chin]);
+  const thumb = document.createElement("canvas");
+  thumb.width = 250;
+  thumb.height = Math.round(250 * 1.25);
+  const tctx = thumb.getContext("2d");
+  tctx.fillStyle = "#d9dce1";
+  tctx.fillRect(0, 0, thumb.width, thumb.height);
+  tctx.drawImage(canvas, left, top, width, height, 0, 0, thumb.width, thumb.height);
+  return thumb;
+}
+
+// People for the comparison: 3 for masculine or feminine, 2 of each for neutral.
+export function pickCelebs(list, shape, style) {
+  const of = (s) => list.filter((p) => p.face_shape === shape && p.style === s);
+  if (style === "neutral") {
+    const f = of("feminine");
+    const m = of("masculine");
+    return [f[0], m[0], f[1], m[1]].filter(Boolean);
+  }
+  return of(style).slice(0, 3);
+}
+
+function link(text, href) {
+  const a = document.createElement("a");
+  a.textContent = text;
+  a.href = href;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  return a;
+}
+
+function celebTile(person) {
+  const tile = document.createElement("figure");
+  if (person.photo) {
+    const img = document.createElement("img");
+    img.alt = `Photo of ${person.name}`;
+    img.loading = "lazy";
+    img.addEventListener("error", () => img.remove());
+    img.src = person.photo.file;
+    tile.append(img);
+  }
+  const caption = document.createElement("figcaption");
+  const name = document.createElement("span");
+  name.className = "celeb-name";
+  name.textContent = person.name;
+  const hair = document.createElement("span");
+  hair.textContent = `Often seen with ${person.known_for}.`;
+  const links = document.createElement("span");
+  const search = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(`${person.name} haircut`)}`;
+  links.append(link("More photos", search), " · ", link("Source", person.source));
+  caption.append(name, hair, links);
+  if (person.photo) {
+    const credit = document.createElement("span");
+    credit.className = "celeb-credit";
+    credit.append("Photo: ", link(`${person.photo.author}, ${person.photo.licence}`, person.photo.page), " (resized)");
+    caption.append(credit);
+  }
+  tile.append(caption);
+  return tile;
+}
+
+export function showCelebs(shape, style, thumb) {
+  const section = el("celebs-section");
+  const people = celebs ? pickCelebs(celebs, shape, style) : [];
+  section.hidden = people.length === 0;
+  if (people.length === 0) return;
+
+  const tiles = people.map(celebTile);
+  if (thumb) {
+    const you = document.createElement("figure");
+    const caption = document.createElement("figcaption");
+    const name = document.createElement("span");
+    name.className = "celeb-name";
+    name.textContent = "You";
+    const note = document.createElement("span");
+    note.textContent = "Your photo stays on your phone.";
+    caption.append(name, note);
+    you.append(thumb, caption);
+    tiles.unshift(you);
+  }
+  el("celebs-title").textContent = `People often described as having ${/^o/.test(shape) ? "an" : "a"} ${shape} face`;
+  el("celebs").replaceChildren(...tiles);
 }
 
 // Insert only. The page never reads the row back (it has no right to).
@@ -498,7 +562,8 @@ formEl.addEventListener("submit", async (event) => {
   const cuts = pickHaircuts(data, choices);
   el("shape-1").textContent = `Closest shape: ${capital(first.shape)} (${percent(first.score)})`;
   el("shape-2").textContent = `Second closest: ${capital(second.shape)} (${percent(second.score)})`;
-  showCuts(cuts, first.shape, choices.texture);
+  showCuts(cuts, first.shape);
+  showCelebs(first.shape, choices.style, current.thumb);
   el("avoid").textContent = cuts[0].avoid;
   el("code").textContent = "";
   choicesEl.hidden = true;

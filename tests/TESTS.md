@@ -19,7 +19,7 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | not run |
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work | 8 | not run |
 | 13 | Open a result on the phone | Every suggested cut shows its drawing; a cut with a missing file shows without a picture and without an error | 4b | PC part pass (2026-11-14); phone part replaced by test 14 |
-| 14 | Open a result on the phone | Every suggested cut shows the user's photo with the cut drawn on it; the page sends no image to any server | 4c | PC part pass; phone not run |
+| 14 | Open a result on the phone | The result shows my photo next to 3 or 4 people for my shape and style; each has a photo credit and a source link; the page sends no image to any server | 4c | PC part pass; phone not run |
 
 ## Run log
 
@@ -104,23 +104,29 @@ Notes:
 - Drawings are made by `tools/make_cuts.py` (added to the plan's file list with the tester's approval): a face outline per shape plus hair parts.
 - Each cut is drawn once, in the first texture listed for it.
 
-### Phase 4c — Haircut on the user's own photo
+### Phase 4c — first attempt: haircut drawn on the user's photo (dropped)
 
-Run 2026-11-14 by Claude in the browser pane, local preview. The plan was changed first (the tester found the neutral drawings not personal enough). The tester approved the 46 neutral drawings for publishing; they stay as the fallback.
+Built 2026-11-14, checked on the PC with a synthetic face (176 drawings, no errors), tried by the tester on a phone, and dropped on 2026-11-15: it did not look good enough. The code was removed before anything was pushed. The neutral drawings from Phase 4b stay.
 
-Claude has no real face photo, so the PC checks use a synthetic face: a drawn oval tilted 8°, with landmarks placed on its outline.
+### Phase 4c — People with a similar face shape
+
+Run 2026-11-15 by Claude in the browser pane, local preview. The tester's review of the list and the phone part of test 14 are still open.
 
 | Check | Expected | Actual | Result |
 |---|---|---|---|
-| Every cut in every texture draws | No errors | 44 cuts × 4 textures = 176 drawn, 0 errors, about 1 ms each | pass |
-| The picture is straightened and centred | Tilted face comes out upright, hair sits on the head | As expected for 11 cuts looked at | pass |
-| Hair colour | Taken from the photo above the forehead | Matched the synthetic hair colour | pass |
-| Page loads with the new script | No script errors, settings file loads | Status "Ready", `cut-specs.json` HTTP 200 | pass |
-| `tools/make_cuts.py` after moving the settings | Same 46 drawings | 0 files changed | pass |
-| Test 14, phone: cut drawn on the user's photo | Every suggested cut shows it | not run | open |
-| Test 14: no image sent to a server | No upload | The code draws on a canvas and has no upload call; not yet checked on a phone | open |
+| List size | 3 masculine and 3 feminine per shape | 42 people, 6 per shape | pass |
+| Every person has a source article | A link to an article that names them under that shape | 42 of 42; 40 names were read on the page, 2 (Bradley Cooper, Daniel Craig) come from the article's title because the page did not load | pass |
+| Every photo is freely licensed | CC BY, CC BY-SA, CC0 or public domain, from Wikimedia Commons | 42 of 42, each with author and licence recorded | pass |
+| Every shape and style gives enough people | 3 (masculine, feminine) or 4 (neutral) | All 21 combinations give 3 or 4 | pass |
+| Test 14, PC: section shows on the result | "You" tile plus the people, with credits and links | Shown for oblong/neutral with a stand-in for the user's photo; 4 photos loaded; no console errors | pass |
+| Test 14, phone | My photo next to the people | not run | open |
+| Test 14: no image sent to a server | No upload | The user's photo is only copied to a canvas in the page; not yet checked on a phone | open |
 
-Known limits (told to the tester before building): it looks like a drawn wig, the person's real hair stays visible, and the hair colour is a guess.
+Notes:
+- Nobody on the list was measured. The face-shape label is the source article's opinion, and articles disagree with each other.
+- Only 3 people on the list are Korean or Korean American (Suga, Jennie, Daniel Dae Kim). The search found one usable K-pop source, and it covers round faces only.
+- The "often seen with" haircut text is Claude's own short description, not from the source articles. It needs the tester's review.
+- `tools/make_celebs.py` (not in the plan's original file list) builds the list and downloads the photos.
 
 ## Tuning data (for Phase 4)
 

@@ -24,6 +24,16 @@ python tools/make_cuts.py
 
 It also writes `tools/cuts-review.html`, one page with every drawing (not tracked by git).
 
+## People with a similar face shape
+
+`docs/celebrities.json` lists well-known people that style articles describe as having each face shape, with a source link per person. Nobody on the list was measured. Their photos in `docs/celebs/` are freely licensed ones from Wikimedia Commons; the author and licence of each are in the JSON file and shown as a credit on the page.
+
+To change the list, edit `PEOPLE` in `tools/make_celebs.py` and run:
+
+```bash
+python tools/make_celebs.py
+```
+
 ## Phone page (local preview)
 
 The page is in `docs/`. It needs a web server; opening `index.html` as a file does not work.

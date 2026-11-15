@@ -1,0 +1,548 @@
+[
+ {
+  "face_shape": "oval",
+  "style": "masculine",
+  "name": "Idris Elba",
+  "known_for": "a short buzz cut and a trimmed beard",
+  "source": "https://thevou.com/blog/oval-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/idris-elba.jpg",
+   "author": "Bryan Berlin",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Idris_Elba_A_House_of_Dynamite-21_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "oval",
+  "style": "masculine",
+  "name": "Chris Evans",
+  "known_for": "a short side-parted cut",
+  "source": "https://thevou.com/blog/oval-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/chris-evans.jpg",
+   "author": "Sara Komatsu",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Chris_Evans_at_the_2025_Toronto_International_Film_Festival_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "oval",
+  "style": "masculine",
+  "name": "Dev Patel",
+  "known_for": "medium-length wavy hair",
+  "source": "https://thevou.com/blog/oval-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/dev-patel.jpg",
+   "author": "Gordon Correll",
+   "licence": "CC BY-SA 2.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Dev_Patel_(29870651654).jpg"
+  }
+ },
+ {
+  "face_shape": "oval",
+  "style": "feminine",
+  "name": "Beyoncé",
+  "known_for": "long waves",
+  "source": "https://therighthairstyles.com/what-hairstyle-suits-your-face-shape/",
+  "photo": {
+   "file": "celebs/beyonce.jpg",
+   "author": "Raph_PH",
+   "licence": "CC BY 2.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_(10_of_118)_(52946364598)_(best_crop).jpg"
+  }
+ },
+ {
+  "face_shape": "oval",
+  "style": "feminine",
+  "name": "Meghan Markle",
+  "known_for": "long layers with a centre part",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/meghan-markle.jpg",
+   "author": "Fuzheado",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:SXSW-2024-OB7A9986-alih-Meghan,_Duchess_of_Sussex_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "oval",
+  "style": "feminine",
+  "name": "Olivia Munn",
+  "known_for": "long layers",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/olivia-munn.jpg",
+   "author": "Gage Skidmore",
+   "licence": "CC BY-SA 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Olivia_Munn_by_Gage_Skidmore.jpg"
+  }
+ },
+ {
+  "face_shape": "round",
+  "style": "masculine",
+  "name": "Leonardo DiCaprio",
+  "known_for": "a slicked-back medium cut",
+  "source": "https://thevou.com/?p=89383",
+  "photo": {
+   "file": "celebs/leonardo-dicaprio.jpg",
+   "author": "Raph_PH",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:LeoPTABFI191125-28_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "round",
+  "style": "masculine",
+  "name": "Usher",
+  "known_for": "a short fade",
+  "source": "https://thevou.com/?p=89383",
+  "photo": {
+   "file": "celebs/usher.jpg",
+   "author": "US Embassy Italy",
+   "licence": "Public domain",
+   "page": "https://commons.wikimedia.org/wiki/File:Usher_Milan_2026.jpg"
+  }
+ },
+ {
+  "face_shape": "round",
+  "style": "masculine",
+  "name": "Suga (BTS)",
+  "known_for": "a medium cut with a fringe",
+  "source": "https://www.soompi.com/article/1530986wpp/8-k-pop-idols-who-prove-round-face-shapes-are-peak-adorableness",
+  "photo": {
+   "file": "celebs/suga-bts.jpg",
+   "author": "Marie Claire Korea",
+   "licence": "CC BY 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Suga_for_Valentino_and_Marie_Claire_Korea_06.jpg"
+  }
+ },
+ {
+  "face_shape": "round",
+  "style": "feminine",
+  "name": "Emma Stone",
+  "known_for": "shoulder-length hair with a side-swept fringe",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/emma-stone.jpg",
+   "author": "Harald Krichel",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Emma_Stone_at_the_2025_Venice_Film_Festival-6313_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "round",
+  "style": "feminine",
+  "name": "Chrissy Teigen",
+  "known_for": "a long bob with waves",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/chrissy-teigen.jpg",
+   "author": "Adweek",
+   "licence": "CC BY 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Chrissy_Teigen_2019.png"
+  }
+ },
+ {
+  "face_shape": "round",
+  "style": "feminine",
+  "name": "Jennie (BLACKPINK)",
+  "known_for": "long straight hair with a centre part",
+  "source": "https://www.soompi.com/article/1530986wpp/8-k-pop-idols-who-prove-round-face-shapes-are-peak-adorableness",
+  "photo": {
+   "file": "celebs/jennie-blackpink.jpg",
+   "author": "티비텐",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:20260526_Jennie_Kim_04.jpg"
+  }
+ },
+ {
+  "face_shape": "square",
+  "style": "masculine",
+  "name": "Pedro Pascal",
+  "known_for": "medium tousled waves",
+  "source": "https://thevou.com/blog/square-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/pedro-pascal.jpg",
+   "author": "Bryan Berlin",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Pedro_Pascal_at_the_2026_New_York_Film_Festival-042.jpg"
+  }
+ },
+ {
+  "face_shape": "square",
+  "style": "masculine",
+  "name": "Michael B. Jordan",
+  "known_for": "a short fade",
+  "source": "https://thevou.com/blog/square-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/michael-b-jordan.jpg",
+   "author": "Kevin Paul",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Michael_B_Jordan_-_Sinners_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "square",
+  "style": "masculine",
+  "name": "Daniel Dae Kim",
+  "known_for": "a short textured cut",
+  "source": "https://thevou.com/blog/square-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/daniel-dae-kim.jpg",
+   "author": "PhilipRomanoPhoto",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Daniel_Dae_Kim_2025_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "square",
+  "style": "feminine",
+  "name": "Zendaya",
+  "known_for": "many styles, from long curls to a bob",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/zendaya.jpg",
+   "author": "PhilipRomano",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Zendaya-byPhilipRomano.jpg"
+  }
+ },
+ {
+  "face_shape": "square",
+  "style": "feminine",
+  "name": "Lucy Liu",
+  "known_for": "long straight hair",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/lucy-liu.jpg",
+   "author": "Bryan Berlin",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Lucy_Liu_Rosemead-13_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "square",
+  "style": "feminine",
+  "name": "Angelina Jolie",
+  "known_for": "long soft layers",
+  "source": "https://www.shinesheets.com/face-shapes/",
+  "photo": {
+   "file": "celebs/angelina-jolie.jpg",
+   "author": "Harald Krichel",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Angelina_Jolie-643531_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "oblong",
+  "style": "masculine",
+  "name": "Keanu Reeves",
+  "known_for": "shoulder-length hair",
+  "source": "https://thevou.com/blog/oblong-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/keanu-reeves.jpg",
+   "author": "Gabriel Hutchinson",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Keanu_Reeves_at_TIFF_2025_02_(Cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "oblong",
+  "style": "masculine",
+  "name": "Benedict Cumberbatch",
+  "known_for": "medium swept-back waves",
+  "source": "https://thevou.com/blog/oblong-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/benedict-cumberbatch.jpg",
+   "author": "Harald Krichel",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Benedict_Cumberbatch-67555.jpg"
+  }
+ },
+ {
+  "face_shape": "oblong",
+  "style": "masculine",
+  "name": "Shawn Mendes",
+  "known_for": "short sides with curls on top",
+  "source": "https://thevou.com/blog/oblong-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/shawn-mendes.jpg",
+   "author": "Cosmopolitan UK",
+   "licence": "CC BY 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:191125_Shawn_Mendes_at_the_2019_American_Music_Awards.png"
+  }
+ },
+ {
+  "face_shape": "oblong",
+  "style": "feminine",
+  "name": "Alexa Chung",
+  "known_for": "shoulder-length hair with a curtain fringe",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/alexa-chung.jpg",
+   "author": "Mmm09kn",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Alexa-chung-hair-first-look-at-her-l-oreal-campaign-35539_w1000.jpg"
+  }
+ },
+ {
+  "face_shape": "oblong",
+  "style": "feminine",
+  "name": "Sarah Jessica Parker",
+  "known_for": "long waves",
+  "source": "https://www.shinesheets.com/face-shapes/",
+  "photo": {
+   "file": "celebs/sarah-jessica-parker.jpg",
+   "author": "PhilipRomano",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:SarahJessicaParker-byPhilipRomano.jpg"
+  }
+ },
+ {
+  "face_shape": "oblong",
+  "style": "feminine",
+  "name": "Keke Palmer",
+  "known_for": "many styles, often shoulder-length or longer",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/keke-palmer.jpg",
+   "author": "Sara Komatsu",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Keke_Palmer_at_SXSW_2026_07.jpg"
+  }
+ },
+ {
+  "face_shape": "heart",
+  "style": "masculine",
+  "name": "Bradley Cooper",
+  "known_for": "medium swept-back hair",
+  "source": "https://thevou.com/blog/heart-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/bradley-cooper.jpg",
+   "author": "Bryan Berlin",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Bradley_Cooper_Is_This_Thing_On-41_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "heart",
+  "style": "masculine",
+  "name": "Daniel Craig",
+  "known_for": "a short crop",
+  "source": "https://thevou.com/blog/heart-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/daniel-craig.jpg",
+   "author": "Max Surprenant",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Daniel_Craig_TIFF_2025_Red_Carpet_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "heart",
+  "style": "masculine",
+  "name": "Chris Colfer",
+  "known_for": "a short side-swept cut",
+  "source": "https://www.glassesshop.com/blog/celebrities-face-shapes",
+  "photo": {
+   "file": "celebs/chris-colfer.jpg",
+   "author": "David Shankbone",
+   "licence": "CC BY 2.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Chris_Colfer_2012.jpg"
+  }
+ },
+ {
+  "face_shape": "heart",
+  "style": "feminine",
+  "name": "Reese Witherspoon",
+  "known_for": "a long bob with a side-swept fringe",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/reese-witherspoon.jpg",
+   "author": "CaseyJNewell",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Reese_Witherspoon_at_Nashville_Film_Festival_2026_(cropped_head_room).jpg"
+  }
+ },
+ {
+  "face_shape": "heart",
+  "style": "feminine",
+  "name": "Kerry Washington",
+  "known_for": "shoulder-length waves",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/kerry-washington.jpg",
+   "author": "PhilipRomano",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:KerryWashington-byPhilipRomano.jpg"
+  }
+ },
+ {
+  "face_shape": "heart",
+  "style": "feminine",
+  "name": "Constance Wu",
+  "known_for": "long hair, often with a fringe",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/constance-wu.jpg",
+   "author": "PhilipRomanoPhoto",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:ConstanceWu-byPhilipRomano.jpg"
+  }
+ },
+ {
+  "face_shape": "diamond",
+  "style": "masculine",
+  "name": "Robert Pattinson",
+  "known_for": "a tousled textured cut",
+  "source": "https://thevou.com/blog/diamond-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/robert-pattinson.jpg",
+   "author": "Colleen Sturtevant",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Robert_Pattinson_Venice_Film_Festival_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "diamond",
+  "style": "masculine",
+  "name": "Cillian Murphy",
+  "known_for": "a textured crop with a fringe",
+  "source": "https://thevou.com/blog/diamond-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/cillian-murphy.jpg",
+   "author": "Netflix",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Cillian_Murphy_at_the_London_premier_of_Steve_in_September_2025_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "diamond",
+  "style": "masculine",
+  "name": "Mahershala Ali",
+  "known_for": "a shaved head",
+  "source": "https://thevou.com/blog/diamond-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/mahershala-ali.jpg",
+   "author": "Gabriel Hutchinson",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Mahershala_Ali_at_TIFF_2026_01.jpg"
+  }
+ },
+ {
+  "face_shape": "diamond",
+  "style": "feminine",
+  "name": "Jennifer Lopez",
+  "known_for": "long layers",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/jennifer-lopez.jpg",
+   "author": "Everwest",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Jennifer_Lopez_at_the_2025_Sundance_Film_Festival_(cropped_3).jpg"
+  }
+ },
+ {
+  "face_shape": "diamond",
+  "style": "feminine",
+  "name": "Tyra Banks",
+  "known_for": "long hair with a side-swept fringe",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/tyra-banks.jpg",
+   "author": "Juice Group",
+   "licence": "CC BY 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Tyra_Banks_2018_4.png"
+  }
+ },
+ {
+  "face_shape": "diamond",
+  "style": "feminine",
+  "name": "Eiza González",
+  "known_for": "long waves",
+  "source": "https://purewow.com/beauty/what-face-shape-do-i-have",
+  "photo": {
+   "file": "celebs/eiza-gonzalez.jpg",
+   "author": "Mateusz Malta",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Eiza_Gonz%C3%A1lez_at_2026_London_Film_Festival_01_(cropped2).jpg"
+  }
+ },
+ {
+  "face_shape": "triangle",
+  "style": "masculine",
+  "name": "Tom Cruise",
+  "known_for": "a medium-short layered side part",
+  "source": "https://thevou.com/?p=89406",
+  "photo": {
+   "file": "celebs/tom-cruise.jpg",
+   "author": "Kevin Paul",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Tom_Cruise_at_53rd_Saturn_Awards_2026-01.jpg"
+  }
+ },
+ {
+  "face_shape": "triangle",
+  "style": "masculine",
+  "name": "Rami Malek",
+  "known_for": "short curls on top with tapered sides",
+  "source": "https://thevou.com/?p=89406",
+  "photo": {
+   "file": "celebs/rami-malek.jpg",
+   "author": "Harald Krichel",
+   "licence": "CC BY-SA 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Rami_Malek_at_the_2026_Cannes_Film_Festival-69448.jpg"
+  }
+ },
+ {
+  "face_shape": "triangle",
+  "style": "masculine",
+  "name": "John Krasinski",
+  "known_for": "a short tousled side part",
+  "source": "https://thevou.com/blog/pear-face-shape-male-celebrities/",
+  "photo": {
+   "file": "celebs/john-krasinski.jpg",
+   "author": "Prime Video AU & NZ",
+   "licence": "CC BY 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:John_Krasinski_2022.jpg"
+  }
+ },
+ {
+  "face_shape": "triangle",
+  "style": "feminine",
+  "name": "Kelly Osbourne",
+  "known_for": "a short cut with volume on top",
+  "source": "https://www.shinesheets.com/face-shapes/",
+  "photo": {
+   "file": "celebs/kelly-osbourne.jpg",
+   "author": "Eva Rinaldi from Sydney Australia",
+   "licence": "CC BY-SA 2.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Australias_got_Talent_Judges_(25625771952)_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "triangle",
+  "style": "feminine",
+  "name": "Sophia Bush",
+  "known_for": "medium-to-long waves",
+  "source": "https://www.shinesheets.com/face-shapes/",
+  "photo": {
+   "file": "celebs/sophia-bush.jpg",
+   "author": "Jay Dixit",
+   "licence": "CC BY 4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:2024-03-08_SXSW-2024_Variety-comedy-awards_04645_(cropped).jpg"
+  }
+ },
+ {
+  "face_shape": "triangle",
+  "style": "feminine",
+  "name": "Jennifer Aniston",
+  "known_for": "long layers",
+  "source": "https://www.shinesheets.com/face-shapes/",
+  "photo": {
+   "file": "celebs/jennifer-aniston.jpg",
+   "author": "Angela George",
+   "licence": "CC BY-SA 3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:JenniferAnistonHWoFFeb2012.jpg"
+  }
+ }
+]
