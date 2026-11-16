@@ -134,7 +134,7 @@ Notes:
 
 ### Phase 6 — MCP scaffold
 
-Run 2026-11-16 by Claude. fastmcp 4.2.0, supabase 2.34.1, python-dotenv 1.2.4, Python 3.13. The check in both clients is the tester's step and is still open.
+Run 2026-11-16 by Claude. fastmcp 4.2.0, supabase 2.34.1, python-dotenv 1.2.4, Python 3.13. The check in both clients was done by the tester.
 
 | Check | Expected | Actual | Result |
 |---|---|---|---|
@@ -145,8 +145,8 @@ Run 2026-11-16 by Claude. fastmcp 4.2.0, supabase 2.34.1, python-dotenv 1.2.4, P
 | Settings | Logged as set or missing, never the value | `SUPABASE_URL is set`, `SUPABASE_SERVICE_KEY is set` | pass |
 | Secret key stays out of git | `server/.env` ignored | Ignored by `.gitignore` | pass |
 | Claude Desktop config | One `haircut-advisor` entry added, nothing else changed | Confirmed by comparing the file before and after | pass |
-| Server shows in Claude Desktop | Listed as running | not run | open |
-| Server shows in Claude Code | Listed as connected | not run | open |
+| Server shows in Claude Desktop | Listed as running | Reported by the tester: shown | pass |
+| Server shows in Claude Code | Listed as connected | Reported by the tester: shown. This Claude Code session also lists `haircut-advisor` as a connecting server. | pass |
 
 Note: the tester first saved the settings as `server.env` in the project root, where git did not ignore it. Claude moved it to `server/.env` and added `*.env` to `.gitignore` before any commit. The key was never committed.
 
