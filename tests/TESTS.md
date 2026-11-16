@@ -132,6 +132,24 @@ Notes:
 - The "often seen with" haircut text is Claude's own short description, not from the source articles. It needs the tester's review.
 - `tools/make_celebs.py` (not in the plan's original file list) builds the list and downloads the photos.
 
+### Phase 6 — MCP scaffold
+
+Run 2026-11-16 by Claude. fastmcp 4.2.0, supabase 2.34.1, python-dotenv 1.2.4, Python 3.13. The check in both clients is the tester's step and is still open.
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| Server starts the way Claude Code starts it (`uv run --directory server server.py` from the project folder) | Handshake answers, no tools | Server name `haircut-advisor`, tools `[]`, clean exit | pass |
+| Server starts from another folder with full paths (the way Claude Desktop starts it) | Same | Same, with `uv` and with the venv's `python.exe` | pass |
+| Path with Cyrillic letters, spaces and brackets | No launch problem | None seen | pass |
+| Only MCP messages on stdout | Every stdout line is valid JSON | Yes; log lines go to stderr | pass |
+| Settings | Logged as set or missing, never the value | `SUPABASE_URL is set`, `SUPABASE_SERVICE_KEY is set` | pass |
+| Secret key stays out of git | `server/.env` ignored | Ignored by `.gitignore` | pass |
+| Claude Desktop config | One `haircut-advisor` entry added, nothing else changed | Confirmed by comparing the file before and after | pass |
+| Server shows in Claude Desktop | Listed as running | not run | open |
+| Server shows in Claude Code | Listed as connected | not run | open |
+
+Note: the tester first saved the settings as `server.env` in the project root, where git did not ignore it. Claude moved it to `server/.env` and added `*.env` to `.gitignore` before any commit. The key was never committed.
+
 ## Tuning data (for Phase 4)
 
 Readings from the tester's phone, 2026-11-14, all with "Photo checks passed". 4 different photos of the same person (confirmed by the tester).

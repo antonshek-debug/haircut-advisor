@@ -36,6 +36,32 @@ python -m http.server 8000 --directory docs
 - On a phone: connect it to the same Wi-Fi, then open `http://<PC IP address>:8000`. Find the address with `ipconfig` (IPv4 Address). If Windows Firewall asks, allow Python on private networks.
 - The phone needs internet, because the MediaPipe library and the face model load from a CDN.
 
+## MCP server
+
+The server is in `server/`. It uses Python through `uv`. It has no tools yet (Phase 6); they are added in Phase 7.
+
+Set up once:
+
+1. Copy `server/.env.example` to `server/.env` and fill in the two values. `server/.env` is git-ignored. The secret key must never be committed.
+2. Install the packages:
+
+```bash
+uv sync --directory server
+```
+
+Run it by hand (it waits for an MCP client on stdin; stop it with Ctrl+C):
+
+```bash
+uv run --directory server server.py
+```
+
+Connect the clients:
+
+- **Claude Code:** `.mcp.json` in this folder registers the server for this project. Claude Code asks once whether to trust it.
+- **Claude Desktop:** add an entry named `haircut-advisor` to `mcpServers` in `claude_desktop_config.json` (Settings → Developer → Edit Config). Use full paths: `command` is `server\.venv\Scripts\python.exe` inside this folder, and `args` holds the full path of `server\server.py`. Then quit Claude Desktop from the tray and open it again.
+
+The server logs to stderr only. Never add `print()` to it: stdout carries the MCP messages.
+
 ## Database
 
 `db/schema.sql` creates the tables and security rules. `db/haircuts_seed.sql` fills the `haircuts` table. Run both in the Supabase SQL Editor, schema first.

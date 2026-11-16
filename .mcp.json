@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "haircut-advisor": {
+      "command": "uv",
+      "args": ["run", "--directory", "server", "server.py"]
+    }
+  }
+}

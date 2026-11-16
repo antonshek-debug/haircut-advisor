@@ -35,6 +35,7 @@ Why measure instead of letting Claude look at the photo: the same photo gives th
 | Build tool | Claude Code tab |
 | Haircut pictures (added 2026-11-14, removed 2026-11-15) | None. Neutral line drawings (Phase 4b) and an overlay on the user's photo were both built and then removed, because neither looked good enough. The result shows people with a similar face shape instead (next row). |
 | People with a similar face shape (added 2026-11-15) | The result shows well-known people that style articles describe as having the user's face shape, next to the user's own photo. The labels are the articles' opinions: **nobody on the list is measured.** Photos are freely licensed ones from Wikimedia Commons, with a credit line. The user's photo is still never uploaded. |
+| AI try-on (added 2026-11-15, optional, Phase 10) | Opt-in only. A "Try it on my photo" button on each suggested cut sends the selfie to an outside AI image service and shows the edited photo. **Nothing is uploaded unless the user taps the button and accepts the warning.** We store no photo and no edited picture. The API key lives in a Supabase Edge Function, never in the page. Build only after Phase 8 works. |
 
 ## 3. Architecture
 ```
@@ -114,6 +115,7 @@ Photo-quality checks: no face found; more than one face; head turned or tilted; 
 - Step 3: choices: length, texture, style. **The user picks style. The page never guesses gender, age or ethnicity.**
 - Step 4: the result: top 2 shapes, 3–5 cuts with reasons, 1 cut to avoid, the caveat, and the code.
 - People with a similar face shape (Phase 4c): under the haircuts, the result shows the user's own photo next to 3 well-known people listed under the user's closest shape and chosen style (2 feminine and 2 masculine for neutral). Each has a photo with a credit, the haircut they are often seen with, a link to more photos and a link to the source article. A note says the labels are opinions, nobody shown was measured, and the list does not say the user looks like them. **I review the list before it goes live.**
+- AI try-on (Phase 10, optional): each suggested cut has a "Try it on my photo" button. Tapping it shows a warning first: "This sends your photo to an outside AI service to edit it. We do not keep it. The picture is AI-made and may change your face." Only after "Send my photo" does the page call the Edge Function. The edited picture is labelled "AI-generated". The Step 1 consent line stays as it is, with one added sentence: "Unless you choose the optional AI try-on."
 - Caveat text on every result: "Face-shape haircut rules are stylist conventions, not science. Measurements are approximate."
 - Pin the MediaPipe library version and the model file URL. Do not use `@latest`.
 
@@ -135,6 +137,7 @@ Rules for every tool: `async def`, a clear docstring (Claude reads it), returns 
 | Server | Python via `uv`, `fastmcp`, `supabase` (Python client), `python-dotenv` |
 | QR | `qrcode` (Python) |
 | Accounts | GitHub (`antonshek-debug`), Supabase, Render |
+| AI try-on (Phase 10) | A paid image-editing API (provider and price: choose and check at the start of Phase 10), one Supabase Edge Function, the API key as a Supabase secret |
 
 Python MediaPipe is **not** needed anymore. The old Python-version risk is gone.
 
@@ -145,6 +148,7 @@ Python MediaPipe is **not** needed anymore. The old Python-version risk is gone.
 - Render free plan: the server sleeps after 15 minutes idle and takes about 1 minute to wake. Before a demo, open the server URL once to wake it.
 - A phone camera needs HTTPS. GitHub Pages provides it.
 - Privacy: photos stay on the phone. I'm not a lawyer; ask the professor if the demo needs a consent form.
+- AI try-on (Phase 10): the photo leaves the phone and goes to a third-party company, so **ask the professor before building it**. Each picture costs money, so the Edge Function needs a class passcode and a daily limit. The result differs on every run and the model may change the face, so it cannot be tested like the measurements.
 
 ## 11. Test cases
 Write the expected result before building. Record the actual result after each phase in `tests/TESTS.md`.
@@ -165,6 +169,9 @@ Write the expected result before building. Record the actual result after each p
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work |
 | 13 | (removed 2026-11-15 with the haircut drawings) | — |
 | 14 | Open a result on the phone | The result shows my photo next to 3 or 4 people for my shape and style; each has a photo credit and a source link; the page sends no image to any server |
+| 15 | Phase 10: get a result and do not tap "Try it on my photo" | The page sends no image to any server |
+| 16 | Phase 10: tap "Try it on my photo", accept the warning | An edited photo appears, labelled "AI-generated"; no photo is stored in Supabase |
+| 17 | Phase 10: call the Edge Function with a wrong passcode, or after the daily limit | Refused with a clear message; no paid request is made |
 
 ## 12. Phases
 Each phase ends with its checks passing and a git commit with a short message.
@@ -182,6 +189,7 @@ Each phase ends with its checks passing and a git commit with a short message.
 | 7 | Tools 1 → 2 → 3, one at a time, each tested in both clients before the next | Tests 5, 6, 10, 11 pass |
 | 8 | Render: same `server.py` with HTTP transport (env var picks the transport); service key in Render settings; add the URL as a custom connector in claude.ai; QR #2 = connector URL | Test 12 passes |
 | 9 | Compare with existing MCP servers; write the experiment note | Note saved in the course folder |
+| 10 | Optional, only after Phase 8 and the professor's OK: AI try-on. Choose the image service → Edge Function with passcode and daily limit → button, warning and result on the page | Tests 15–17 pass on my phone |
 
 ## Sources (checked 2026-11-14)
 - MediaPipe Face Landmarker: https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker
