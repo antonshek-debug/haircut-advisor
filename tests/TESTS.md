@@ -10,8 +10,8 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 2 | Photo with no face | "No face found", no crash | 3 | pass (2026-11-14) |
 | 3 | Photo with 2 people | Warning, no confident result | 3 | pass (2026-11-14) |
 | 4 | Head turned sideways | "Face the camera" warning | 3 | pass (2026-11-14) |
-| 5 | `suggest_haircuts("heart", length="short")` | Only short cuts | 7 | not run |
-| 6 | `suggest_haircuts("blob")` | List of valid shapes | 7 | not run |
+| 5 | `suggest_haircuts("heart", length="short")` | Only short cuts | 7 | pass over stdio (2026-11-16); clients not yet checked |
+| 6 | `suggest_haircuts("blob")` | List of valid shapes | 7 | pass over stdio (2026-11-16); clients not yet checked |
 | 7 | Scan QR on iPhone and Android | Page opens, camera works on both | 5 | pass (2026-11-14) |
 | 8 | Camera permission denied | Clear message; gallery still works | 4 | pass (2026-11-14) |
 | 9 | Use the anon key to read `results` | Blocked | 2 | pass (2026-11-14) |
@@ -149,6 +149,28 @@ Run 2026-11-16 by Claude. fastmcp 4.2.0, supabase 2.34.1, python-dotenv 1.2.4, P
 | Server shows in Claude Code | Listed as connected | Reported by the tester: shown. This Claude Code session also lists `haircut-advisor` as a connecting server. | pass |
 
 Note: the tester first saved the settings as `server.env` in the project root, where git did not ignore it. Claude moved it to `server/.env` and added `*.env` to `.gitignore` before any commit. The key was never committed.
+
+### Phase 7 — Tools
+
+#### Tool 1: `suggest_haircuts`
+
+Run 2026-11-16 by Claude: the server started over stdio and called with MCP messages, against the live `haircuts` table. The check in the two clients is still open.
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| Test 5: `suggest_haircuts("heart", length="short")` | Only short cuts | 3 cuts, all short, plus 1 thing to avoid and the caveat | pass |
+| Test 6: `suggest_haircuts("blob")` | List of valid shapes | `"blob" is not a valid face shape. Valid shapes: oval, round, square, oblong, heart, diamond, triangle.` | pass |
+| Shape with spaces and capitals (`" Oval "`) | Accepted | 5 cuts for oval | pass |
+| No filters | At most 5 cuts | 5 of oval's 7 | pass |
+| Filters that match nothing (round, long, coily, masculine) | Clear message, no crash | "No cut in the table matches all of these filters. Try again with fewer filters." | pass |
+| Invalid filter (`length="tiny"`) | List of valid values | `"tiny" is not a valid length. Valid values: short, medium, long.` | pass |
+| `length="any"` | Treated as no length filter | 5 cuts of mixed length | pass |
+| Database unreachable (wrong URL on purpose) | Useful message, no crash | "The haircut database could not be reached. …" and the error in the stderr log | pass |
+| Logging | One `logging.info` line per call, on stderr | Yes | pass |
+| Called from Claude Code | Works | not run | open |
+| Called from Claude Desktop | Works | not run | open |
+
+Note: unlike the phone page, the tool does not fill the list with "close match" cuts. Its filters are strict, so it can return fewer than 3 cuts and says so.
 
 ## Tuning data (for Phase 4)
 
