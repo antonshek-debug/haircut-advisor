@@ -10,8 +10,8 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 2 | Photo with no face | "No face found", no crash | 3 | pass (2026-11-14) |
 | 3 | Photo with 2 people | Warning, no confident result | 3 | pass (2026-11-14) |
 | 4 | Head turned sideways | "Face the camera" warning | 3 | pass (2026-11-14) |
-| 5 | `suggest_haircuts("heart", length="short")` | Only short cuts | 7 | pass over stdio (2026-11-16); clients not yet checked |
-| 6 | `suggest_haircuts("blob")` | List of valid shapes | 7 | pass over stdio (2026-11-16); clients not yet checked |
+| 5 | `suggest_haircuts("heart", length="short")` | Only short cuts | 7 | pass (2026-11-16) |
+| 6 | `suggest_haircuts("blob")` | List of valid shapes | 7 | pass (2026-11-16) |
 | 7 | Scan QR on iPhone and Android | Page opens, camera works on both | 5 | pass (2026-11-14) |
 | 8 | Camera permission denied | Clear message; gallery still works | 4 | pass (2026-11-14) |
 | 9 | Use the anon key to read `results` | Blocked | 2 | pass (2026-11-14) |
@@ -154,7 +154,7 @@ Note: the tester first saved the settings as `server.env` in the project root, w
 
 #### Tool 1: `suggest_haircuts`
 
-Run 2026-11-16 by Claude: the server started over stdio and called with MCP messages, against the live `haircuts` table. The check in the two clients is still open.
+Run 2026-11-16 by Claude: the server started over stdio and called with MCP messages, against the live `haircuts` table. Both clients were then checked by the tester.
 
 | Check | Expected | Actual | Result |
 |---|---|---|---|
@@ -167,8 +167,8 @@ Run 2026-11-16 by Claude: the server started over stdio and called with MCP mess
 | `length="any"` | Treated as no length filter | 5 cuts of mixed length | pass |
 | Database unreachable (wrong URL on purpose) | Useful message, no crash | "The haircut database could not be reached. …" and the error in the stderr log | pass |
 | Logging | One `logging.info` line per call, on stderr | Yes | pass |
-| Called from Claude Code | Works | not run | open |
-| Called from Claude Desktop | Works | not run | open |
+| Called from Claude Code | Works | Reported by the tester: works. Claude also called it from a Claude Code session on 2026-11-16: heart/short gave 3 short cuts, and "blob" gave the list of valid shapes. | pass |
+| Called from Claude Desktop | Works | Reported by the tester: works | pass |
 
 Note: unlike the phone page, the tool does not fill the list with "close match" cuts. Its filters are strict, so it can return fewer than 3 cuts and says so.
 
