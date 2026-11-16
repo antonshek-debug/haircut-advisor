@@ -15,8 +15,8 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 7 | Scan QR on iPhone and Android | Page opens, camera works on both | 5 | pass (2026-11-14) |
 | 8 | Camera permission denied | Clear message; gallery still works | 4 | pass (2026-11-14) |
 | 9 | Use the anon key to read `results` | Blocked | 2 | pass (2026-11-14) |
-| 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | not run |
-| 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | not run |
+| 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | pass over stdio (2026-11-16); clients not yet checked |
+| 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | open: needs the tester to compare with the phone |
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work | 8 | not run |
 | 13 | (removed 2026-11-15 with the haircut drawings) | — | 4b | removed |
 | 14 | Open a result on the phone | The result shows my photo next to 3 or 4 people for my shape and style; each has a photo credit and a source link; the page sends no image to any server | 4c | pass (2026-11-15) |
@@ -171,6 +171,25 @@ Run 2026-11-16 by Claude: the server started over stdio and called with MCP mess
 | Called from Claude Desktop | Works | Reported by the tester: works | pass |
 
 Note: unlike the phone page, the tool does not fill the list with "close match" cuts. Its filters are strict, so it can return fewer than 3 cuts and says so.
+
+#### Tool 2: `get_result`
+
+Run 2026-11-16 by Claude: the server started over stdio and called with MCP messages, against the live `results` table. CJ663Q is the newest saved row (2026-11-15), used as a real code.
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| Tools listed | `suggest_haircuts`, `get_result` | Both | pass |
+| `get_result("CJ663Q")` | Both shapes with scores, 4 measurements, choices, suggestions | oblong 0.41, oval 0.34; 1.242 / 0.890 / 0.771 / 143.9°; any, straight, feminine; 3 oblong cuts, avoid line, caveat | pass |
+| `" cj6 63q "` (lower case, spaces) | Same result as CJ663Q | Same | pass |
+| Test 10: `"ZZZZZZ"` (well-formed, not saved) | "No result with that code." | Yes | pass |
+| `"hello"`, `"OOOOOO"`, `""` (malformed) | "No result with that code.", no database call needed | Yes | pass |
+| Database unreachable (wrong URL on purpose) | Useful message, no crash | "The haircut database could not be reached. …" and the error in the stderr log | pass |
+| Logging | One `logging.info` line per call, on stderr | Yes | pass |
+| Test 11: shape matches the phone | Same closest shape the phone showed | not run | open |
+| Called from Claude Code | Works | not run | open |
+| Called from Claude Desktop | Works | not run | open |
+
+Note: the suggestions use the closest shape and the person's saved choices, with the same strict filters as `suggest_haircuts`. A saved length of "any" means no length filter.
 
 ## Tuning data (for Phase 4)
 

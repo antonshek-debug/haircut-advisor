@@ -15,6 +15,7 @@ Rules for this file (PLAN.md):
 
 import logging
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -172,6 +173,66 @@ async def suggest_haircuts(
     except Exception:
         log.exception("suggest_haircuts failed")
         return DB_ERROR
+
+
+CODE_PATTERN = re.compile(r"^[A-HJ-NP-Z2-9]{6}$")  # same rule as db/schema.sql
+NO_RESULT = "No result with that code."
+RESULT_COLUMNS = (
+    "code, created_at, length_ratio, forehead_ratio, jaw_ratio, jaw_angle, "
+    "shape_1, score_1, shape_2, score_2, length_pref, texture, style"
+)
+
+
+@mcp.tool
+async def get_result(code: str) -> str:
+    """Read one saved result by its 6-character code.
+
+    Use this when someone gives the code the phone page showed them.
+    Case and spaces in the code do not matter.
+
+    Args:
+        code: The 6-character code from the phone page, for example "K7MP3Q".
+
+    Returns:
+        The two closest face shapes with scores, the 4 measurements, the
+        person's own choices (length, texture, style), and haircut suggestions
+        for the closest shape and those choices. If no result has that code,
+        returns "No result with that code."
+    """
+    log.info("get_result(code=%r)", code)
+
+    wanted = "".join((code or "").split()).upper()
+    if not CODE_PATTERN.match(wanted):
+        return NO_RESULT
+
+    try:
+        client = await db()
+        response = (
+            await client.table("results").select(RESULT_COLUMNS).eq("code", wanted).limit(1).execute()
+        )
+        if not response.data:
+            return NO_RESULT
+        row = response.data[0]
+        length = None if row["length_pref"] == "any" else row["length_pref"]
+        suggestions = await haircut_text(row["shape_1"], length, row["texture"], row["style"])
+    except Exception:
+        log.exception("get_result failed")
+        return DB_ERROR
+
+    lines = [
+        f"Result {row['code']} (saved {row['created_at'][:10]})",
+        f"Closest shape: {row['shape_1']} (score {row['score_1']:.2f})",
+        f"Second closest: {row['shape_2']} (score {row['score_2']:.2f})",
+        "Measurements:",
+        f"- Face length / cheekbone width: {row['length_ratio']:.3f}",
+        f"- Forehead width / cheekbone width: {row['forehead_ratio']:.3f}",
+        f"- Jaw width / cheekbone width: {row['jaw_ratio']:.3f}",
+        f"- Jaw angle: {row['jaw_angle']:.1f} degrees",
+        f"Their choices: length {row['length_pref']}, texture {row['texture']}, style {row['style']}",
+        "",
+        suggestions,
+    ]
+    return "\n".join(lines)
 
 
 def main() -> None:
