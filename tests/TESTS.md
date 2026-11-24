@@ -15,8 +15,8 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 7 | Scan QR on iPhone and Android | Page opens, camera works on both | 5 | pass (2026-11-14) |
 | 8 | Camera permission denied | Clear message; gallery still works | 4 | pass (2026-11-14) |
 | 9 | Use the anon key to read `results` | Blocked | 2 | pass (2026-11-14) |
-| 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | pass over stdio (2026-11-16); clients not yet checked |
-| 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | open: needs the tester to compare with the phone |
+| 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | pass (2026-11-24) |
+| 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | pass (2026-11-24) |
 | 12 | Call the Render MCP URL from claude.ai | All 3 tools work | 8 | not run |
 | 13 | (removed 2026-11-15 with the haircut drawings) | — | 4b | removed |
 | 14 | Open a result on the phone | The result shows my photo next to 3 or 4 people for my shape and style; each has a photo credit and a source link; the page sends no image to any server | 4c | pass (2026-11-15) |
@@ -185,9 +185,9 @@ Run 2026-11-16 by Claude: the server started over stdio and called with MCP mess
 | `"hello"`, `"OOOOOO"`, `""` (malformed) | "No result with that code.", no database call needed | Yes | pass |
 | Database unreachable (wrong URL on purpose) | Useful message, no crash | "The haircut database could not be reached. …" and the error in the stderr log | pass |
 | Logging | One `logging.info` line per call, on stderr | Yes | pass |
-| Test 11: shape matches the phone | Same closest shape the phone showed | not run | open |
-| Called from Claude Code | Works | not run | open |
-| Called from Claude Desktop | Works | not run | open |
+| Test 11: shape matches the phone | Same closest shape the phone showed | Reported by the tester: matches | pass |
+| Called from Claude Code | Works | Reported by the tester: works. Claude also called it from a Claude Code session on 2026-11-24: "zzzzzz" gave "No result with that code." | pass |
+| Called from Claude Desktop | Works | Reported by the tester: works | pass |
 
 Note: the suggestions use the closest shape and the person's saved choices, with the same strict filters as `suggest_haircuts`. A saved length of "any" means no length filter.
 
