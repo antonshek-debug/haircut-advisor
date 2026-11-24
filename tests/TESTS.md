@@ -17,7 +17,7 @@ Expected results come from PLAN.md section 11. Record the actual result after ea
 | 9 | Use the anon key to read `results` | Blocked | 2 | pass (2026-11-14) |
 | 10 | `get_result("ZZZZZZ")` | "No result with that code" | 7 | pass (2026-11-24) |
 | 11 | `get_result(<real code from phone>)` | Same shape the phone showed | 7 | pass (2026-11-24) |
-| 12 | Call the Render MCP URL from claude.ai | All 3 tools work | 8 | not run |
+| 12 | Call the Render MCP URL from claude.ai | All 3 tools work | 8 | pass (2026-11-24) |
 | 13 | (removed 2026-11-15 with the haircut drawings) | — | 4b | removed |
 | 14 | Open a result on the phone | The result shows my photo next to 3 or 4 people for my shape and style; each has a photo credit and a source link; the page sends no image to any server | 4c | pass (2026-11-15) |
 
@@ -227,7 +227,7 @@ Render built commit `7b28f7e` without errors, but that `server.py` always starte
 | Live `GET /` | Plain "running" page | 200, "haircut-advisor MCP server is running. …" | pass |
 | Live `/mcp`: tools listed and one call per tool (Claude, FastMCP client) | All 3 work | heart/short cuts; "No result with that code."; 11 results | pass |
 | QR #2 | Encodes the connector URL | `tools/qr-connector.png` → `https://haircut-advisor.onrender.com/mcp` | pass |
-| Test 12: all 3 tools from claude.ai | Work | not run | open |
+| Test 12: all 3 tools from claude.ai | Work | Reported by the tester: all 3 work as a custom connector | pass |
 
 ## Tuning data (for Phase 4)
 
