@@ -38,7 +38,13 @@ python -m http.server 8000 --directory docs
 
 ## MCP server
 
-The server is in `server/`. It uses Python through `uv`. It has no tools yet (Phase 6); they are added in Phase 7.
+The server is in `server/`. It uses Python through `uv`. It reads the database with the secret key, so it never hands out single results except by their code.
+
+| Tool | What it does |
+|---|---|
+| `suggest_haircuts(face_shape, length?, texture?, style?)` | Up to 5 cuts for a face shape, one thing to avoid, and a caveat. The filters are strict. |
+| `get_result(code)` | One saved result by its 6-character code: the two closest shapes, the 4 measurements, the person's choices and matching cuts. Case and spaces do not matter. |
+| `class_stats()` | Totals only: number of results, date range, and the count and percent per closest shape. |
 
 Set up once:
 

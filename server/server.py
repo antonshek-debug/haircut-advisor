@@ -235,6 +235,46 @@ async def get_result(code: str) -> str:
     return "\n".join(lines)
 
 
+@mcp.tool
+async def class_stats() -> str:
+    """Totals for all saved results: how many people got each closest face shape.
+
+    Use this for questions about the whole class, such as "which face shape is
+    most common?". It returns totals only, never single results or codes.
+
+    Returns:
+        The number of results, the date range, and for each of the 7 shapes the
+        count and percent of results where it was the closest shape.
+    """
+    log.info("class_stats()")
+
+    try:
+        client = await db()
+        response = await client.table("results").select("shape_1, created_at").execute()
+    except Exception:
+        log.exception("class_stats failed")
+        return DB_ERROR
+
+    rows = response.data or []
+    if not rows:
+        return "No results have been saved yet."
+
+    total = len(rows)
+    days = sorted(row["created_at"][:10] for row in rows)
+    counts = {shape: 0 for shape in SHAPES}
+    for row in rows:
+        counts[row["shape_1"]] += 1
+
+    lines = [
+        f"{total} result{'s' if total != 1 else ''} saved, from {days[0]} to {days[-1]}.",
+        "Closest face shape:",
+    ]
+    for shape in sorted(SHAPES, key=lambda s: (-counts[s], SHAPES.index(s))):
+        lines.append(f"- {shape}: {counts[shape]} ({100 * counts[shape] / total:.0f}%)")
+    lines.append(f"Note: {CAVEAT}")
+    return "\n".join(lines)
+
+
 def main() -> None:
     for name in REQUIRED_SETTINGS:
         log.info("%s is %s", name, "set" if os.getenv(name) else "MISSING")

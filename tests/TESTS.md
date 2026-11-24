@@ -191,6 +191,24 @@ Run 2026-11-16 by Claude: the server started over stdio and called with MCP mess
 
 Note: the suggestions use the closest shape and the person's saved choices, with the same strict filters as `suggest_haircuts`. A saved length of "any" means no length filter.
 
+#### Tool 3: `class_stats`
+
+Run 2026-11-24 by Claude: the server started over stdio and called with MCP messages, against the live `results` table. Before the run, the tester deleted the old test rows (ids 4–11, scored with version 1 cut-offs); 11 rows remained (ids 12–22).
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| Tools listed | All 3 tools | `suggest_haircuts`, `get_result`, `class_stats` | pass |
+| `class_stats()` | Total, date range, count and percent per shape | 11 results, 2026-11-14 to 2026-11-24; oval 4 (36%), oblong 4 (36%), round 2 (18%), diamond 1 (9%), square, heart, triangle 0; caveat | pass |
+| Totals only | No codes, no single rows, no measurements | None in the output | pass |
+| Counts add up | Sum equals the total | 4 + 4 + 2 + 1 = 11 | pass |
+| Extra argument (`shape="oval"`) | Refused | Refused by FastMCP: "Unexpected keyword argument" | pass |
+| Database unreachable (wrong URL on purpose) | Useful message, no crash | "The haircut database could not be reached. …" and the error in the stderr log | pass |
+| Logging | One `logging.info` line per call, on stderr | Yes | pass |
+| Called from Claude Code | Works | not run | open |
+| Called from Claude Desktop | Works | not run | open |
+
+Note: rows 12–17 were saved on 2026-11-14, the day the cut-offs changed to version 2. Rows keep the shape the page gave when they were saved.
+
 ## Tuning data (for Phase 4)
 
 Readings from the tester's phone, 2026-11-14, all with "Photo checks passed". 4 different photos of the same person (confirmed by the tester).
