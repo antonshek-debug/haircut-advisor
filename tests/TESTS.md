@@ -223,7 +223,10 @@ Render built commit `7b28f7e` without errors, but that `server.py` always starte
 | HTTP mode: one call per tool | Same answers as stdio | heart/short cuts; "No result with that code."; 11 results | pass |
 | HTTP mode: `GET /` | Plain "running" page | 200, "haircut-advisor MCP server is running. …" | pass |
 | stdio mode still works (`MCP_TRANSPORT` unset) | Same as Phase 7 | `get_result("CJ663Q")` as before | pass |
-| Render deploy stays up | Log says HTTP, no restart loop | not run | open |
+| Render deploy stays up | Log says HTTP, no restart loop | Service up at https://haircut-advisor.onrender.com (checked by Claude, 2026-11-24) | pass |
+| Live `GET /` | Plain "running" page | 200, "haircut-advisor MCP server is running. …" | pass |
+| Live `/mcp`: tools listed and one call per tool (Claude, FastMCP client) | All 3 work | heart/short cuts; "No result with that code."; 11 results | pass |
+| QR #2 | Encodes the connector URL | `tools/qr-connector.png` → `https://haircut-advisor.onrender.com/mcp` | pass |
 | Test 12: all 3 tools from claude.ai | Work | not run | open |
 
 ## Tuning data (for Phase 4)

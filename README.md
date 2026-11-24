@@ -79,6 +79,8 @@ Web Service settings in the Render dashboard:
 
 A push to `main` redeploys it. The MCP address is the service URL plus `/mcp`; add that in claude.ai under Settings → Connectors → Add custom connector.
 
+Live connector URL: `https://haircut-advisor.onrender.com/mcp`. QR #2 for it is `tools/qr-connector.png`.
+
 The free server sleeps after 15 minutes idle and takes about a minute to wake. Before a demo, open the service URL itself in a browser; it shows "haircut-advisor MCP server is running".
 
 Anyone with the URL can call the 3 tools, so they never list single results: one result needs its code, and `class_stats` gives totals only.
