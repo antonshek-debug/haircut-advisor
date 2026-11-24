@@ -21,6 +21,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from fastmcp import FastMCP
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse
 from supabase import AsyncClient, acreate_client
 
 logging.basicConfig(
@@ -275,11 +277,26 @@ async def class_stats() -> str:
     return "\n".join(lines)
 
 
+@mcp.custom_route("/", methods=["GET"])
+async def home(request: Request) -> PlainTextResponse:
+    """Plain page for the HTTP server. Open it once to wake Render before a demo."""
+    return PlainTextResponse("haircut-advisor MCP server is running. The MCP address is /mcp.")
+
+
 def main() -> None:
     for name in REQUIRED_SETTINGS:
         log.info("%s is %s", name, "set" if os.getenv(name) else "MISSING")
-    log.info("Starting haircut-advisor on stdio")
-    mcp.run()  # stdio is the default transport
+    # MCP_TRANSPORT picks the transport (PLAN.md Phase 8):
+    #   unset or "stdio" -> local clients (Claude Desktop, Claude Code)
+    #   "http"           -> Render; listens on 0.0.0.0:$PORT at /mcp
+    transport = os.getenv("MCP_TRANSPORT", "stdio").strip().lower()
+    if transport == "http":
+        port = int(os.getenv("PORT", "8000"))
+        log.info("Starting haircut-advisor on HTTP, port %d, path /mcp", port)
+        mcp.run(transport="http", host="0.0.0.0", port=port, path="/mcp")
+    else:
+        log.info("Starting haircut-advisor on stdio")
+        mcp.run()  # stdio is the default transport
 
 
 if __name__ == "__main__":

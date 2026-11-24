@@ -66,6 +66,23 @@ Connect the clients:
 - **Claude Code:** `.mcp.json` in this folder registers the server for this project. Claude Code asks once whether to trust it.
 - **Claude Desktop:** add an entry named `haircut-advisor` to `mcpServers` in `claude_desktop_config.json` (Settings → Developer → Edit Config). Use full paths: `command` is `server\.venv\Scripts\python.exe` inside this folder, and `args` holds the full path of `server\server.py`. Then quit Claude Desktop from the tray and open it again.
 
+### On Render (HTTP)
+
+The same `server.py` runs on Render's free plan. The `MCP_TRANSPORT` setting picks the transport: unset means stdio, `http` means HTTP on Render's `$PORT`.
+
+Web Service settings in the Render dashboard:
+
+- Root Directory: `server`
+- Build Command: `pip install uv && uv sync --frozen`
+- Start Command: `uv run server.py`
+- Environment: `MCP_TRANSPORT=http`, `PYTHON_VERSION=3.13`, `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` (the secret key lives only here and in `server/.env`)
+
+A push to `main` redeploys it. The MCP address is the service URL plus `/mcp`; add that in claude.ai under Settings → Connectors → Add custom connector.
+
+The free server sleeps after 15 minutes idle and takes about a minute to wake. Before a demo, open the service URL itself in a browser; it shows "haircut-advisor MCP server is running".
+
+Anyone with the URL can call the 3 tools, so they never list single results: one result needs its code, and `class_stats` gives totals only.
+
 The server logs to stderr only. Never add `print()` to it: stdout carries the MCP messages.
 
 ## Database

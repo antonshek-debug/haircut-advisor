@@ -209,6 +209,23 @@ Run 2026-11-24 by Claude: the server started over stdio and called with MCP mess
 
 Note: rows 12–17 were saved on 2026-11-14, the day the cut-offs changed to version 2. Rows keep the shape the page gave when they were saved.
 
+### Phase 8: Render (HTTP)
+
+#### First deploy, 2026-11-24: failed
+
+Render built commit `7b28f7e` without errors, but that `server.py` always started on stdio. With no client on stdin the server stopped at once, and Render reported "Application exited early" and restarted it in a loop. Fix: `MCP_TRANSPORT=http` now starts the HTTP transport on `0.0.0.0:$PORT` at `/mcp`, and `GET /` gives a plain "running" page for waking the server.
+
+#### Local checks before the second deploy (2026-11-24, by Claude)
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| HTTP mode: tools listed | All 3 | All 3 | pass |
+| HTTP mode: one call per tool | Same answers as stdio | heart/short cuts; "No result with that code."; 11 results | pass |
+| HTTP mode: `GET /` | Plain "running" page | 200, "haircut-advisor MCP server is running. …" | pass |
+| stdio mode still works (`MCP_TRANSPORT` unset) | Same as Phase 7 | `get_result("CJ663Q")` as before | pass |
+| Render deploy stays up | Log says HTTP, no restart loop | not run | open |
+| Test 12: all 3 tools from claude.ai | Work | not run | open |
+
 ## Tuning data (for Phase 4)
 
 Readings from the tester's phone, 2026-11-14, all with "Photo checks passed". 4 different photos of the same person (confirmed by the tester).
