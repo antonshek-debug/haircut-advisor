@@ -229,6 +229,18 @@ Render built commit `7b28f7e` without errors, but that `server.py` always starte
 | QR #2 | Encodes the connector URL | `tools/qr-connector.png` → `https://haircut-advisor.onrender.com/mcp` | pass |
 | Test 12: all 3 tools from claude.ai | Work | Reported by the tester: all 3 work as a custom connector | pass |
 
+### After Phase 9: tool descriptions (2026-11-24)
+
+From the comparison (Week 12 note): Glama marked a similar server down because its tool did not say it was read-only or what happens when nothing matches. Each of the 3 docstrings now starts with "Read-only: it changes nothing." and says what comes back when nothing matches.
+
+Found while checking: FastMCP leaves out a docstring's `Returns:` section, and any text after `Args:`, from the description clients see. The return wording is therefore a plain paragraph above `Args:`.
+
+| Check | Expected | Actual | Result |
+|---|---|---|---|
+| `tools/list` descriptions | Read-only line and no-match wording visible for all 3 | Yes | pass |
+| Parameter descriptions | Still present | Yes, from `Args:` | pass |
+| One call per tool over stdio | Same answers as before | heart/short cuts; "No result with that code."; 11 results | pass |
+
 ## Tuning data (for Phase 4)
 
 Readings from the tester's phone, 2026-11-14, all with "Photo checks passed". 4 different photos of the same person (confirmed by the tester).

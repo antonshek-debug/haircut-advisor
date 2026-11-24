@@ -140,9 +140,14 @@ async def suggest_haircuts(
     texture: str | None = None,
     style: str | None = None,
 ) -> str:
-    """Suggest haircuts for a face shape.
+    """Suggest haircuts for a face shape. Read-only: it changes nothing.
 
     Use this when someone names a face shape and wants haircut ideas.
+
+    Returns up to 5 cuts with a reason each, one thing to avoid, and a
+    caveat. If no cut matches all the filters, says so and suggests fewer
+    filters; if fewer than 3 match, says how many. If the shape or a filter
+    is not valid, returns the list of valid values.
 
     Args:
         face_shape: One of oval, round, square, oblong, heart, diamond, triangle.
@@ -150,10 +155,6 @@ async def suggest_haircuts(
         texture: Optional. The person's hair texture: straight, wavy, curly or coily.
         style: Optional. masculine, feminine or neutral. The person chooses this;
             never guess it from a name or a description.
-
-    Returns:
-        Up to 5 cuts with a reason each, one thing to avoid, and a caveat.
-        If the shape or a filter is not valid, returns the list of valid values.
     """
     log.info("suggest_haircuts(face_shape=%r, length=%r, texture=%r, style=%r)", face_shape, length, texture, style)
 
@@ -187,19 +188,19 @@ RESULT_COLUMNS = (
 
 @mcp.tool
 async def get_result(code: str) -> str:
-    """Read one saved result by its 6-character code.
+    """Read one saved result by its 6-character code. Read-only: it changes nothing.
 
     Use this when someone gives the code the phone page showed them.
     Case and spaces in the code do not matter.
 
+    Returns the two closest face shapes with scores, the 4 measurements, the
+    person's own choices (length, texture, style), and haircut suggestions
+    for the closest shape and those choices. If no result has that code, or
+    the code is not 6 valid characters, returns "No result with that code."
+    There is no way to list results or search them.
+
     Args:
         code: The 6-character code from the phone page, for example "K7MP3Q".
-
-    Returns:
-        The two closest face shapes with scores, the 4 measurements, the
-        person's own choices (length, texture, style), and haircut suggestions
-        for the closest shape and those choices. If no result has that code,
-        returns "No result with that code."
     """
     log.info("get_result(code=%r)", code)
 
@@ -240,13 +241,14 @@ async def get_result(code: str) -> str:
 @mcp.tool
 async def class_stats() -> str:
     """Totals for all saved results: how many people got each closest face shape.
+    Read-only: it changes nothing.
 
     Use this for questions about the whole class, such as "which face shape is
     most common?". It returns totals only, never single results or codes.
 
-    Returns:
-        The number of results, the date range, and for each of the 7 shapes the
-        count and percent of results where it was the closest shape.
+    Returns the number of results, the date range, and for each of the 7
+    shapes the count and percent of results where it was the closest shape.
+    If nothing is saved yet, returns "No results have been saved yet."
     """
     log.info("class_stats()")
 
