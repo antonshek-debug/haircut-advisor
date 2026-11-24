@@ -204,8 +204,8 @@ Run 2026-11-24 by Claude: the server started over stdio and called with MCP mess
 | Extra argument (`shape="oval"`) | Refused | Refused by FastMCP: "Unexpected keyword argument" | pass |
 | Database unreachable (wrong URL on purpose) | Useful message, no crash | "The haircut database could not be reached. …" and the error in the stderr log | pass |
 | Logging | One `logging.info` line per call, on stderr | Yes | pass |
-| Called from Claude Code | Works | not run | open |
-| Called from Claude Desktop | Works | not run | open |
+| Called from Claude Code | Works | Reported by the tester: works. Claude also called it from a Claude Code session on 2026-11-24: same 11 results and percentages. | pass |
+| Called from Claude Desktop | Works | Reported by the tester: works | pass |
 
 Note: rows 12–17 were saved on 2026-11-14, the day the cut-offs changed to version 2. Rows keep the shape the page gave when they were saved.
 
